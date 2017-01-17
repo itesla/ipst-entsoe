@@ -6,20 +6,20 @@
  */
 package eu.itesla_project.entsoe.cases;
 
-import com.google.common.collect.Sets;
+import com.google.common.jimfs.Configuration;
+import com.google.common.jimfs.Jimfs;
 import eu.itesla_project.commons.config.InMemoryPlatformConfig;
 import eu.itesla_project.commons.config.MapModuleConfig;
 import eu.itesla_project.entsoe.util.EntsoeGeographicalCode;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.nio.file.ShrinkWrapFileSystems;
-import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.nio.file.FileSystem;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.Collections;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -30,16 +30,14 @@ import static org.junit.Assert.fail;
 public class EntsoeCaseRepositoryConfigTest {
 
     private FileSystem fileSystem;
-    private Path configDir;
     private EntsoeCaseRepositoryConfig config;
     private MapModuleConfig moduleConfig;
     private InMemoryPlatformConfig platformConfig;
 
     @Before
     public void setUp() throws Exception {
-        JavaArchive archive = ShrinkWrap.create(JavaArchive.class);
-        fileSystem = ShrinkWrapFileSystems.newFileSystem(archive);
-        configDir = fileSystem.getPath("/config");
+        fileSystem = Jimfs.newFileSystem(Configuration.unix());
+        Path configDir = Files.createDirectory(fileSystem.getPath("/config"));
         platformConfig = new InMemoryPlatformConfig(fileSystem);
         moduleConfig = platformConfig.createModuleConfig("entsoecaserepo");
         moduleConfig.setPathProperty("rootDir", configDir);
@@ -52,21 +50,21 @@ public class EntsoeCaseRepositoryConfigTest {
 
     @Test
     public void testLoad() throws Exception {
-        moduleConfig.setStringListProperty("forbiddenFormats_FR", Arrays.asList("CIM1"));
-        moduleConfig.setStringListProperty("forbiddenFormats_BE", Arrays.asList("CIM1"));
+        moduleConfig.setStringListProperty("forbiddenFormats_FR", Collections.singletonList("CIM1"));
+        moduleConfig.setStringListProperty("forbiddenFormats_BE", Collections.singletonList("CIM1"));
         config = EntsoeCaseRepositoryConfig.load(platformConfig, Arrays.asList("CIM1", "UCTE"));
         assertTrue(config.getRootDir().toString().equals("/config"));
         assertTrue(config.getForbiddenFormatsByGeographicalCode().size() == 2);
-        assertTrue(config.getForbiddenFormatsByGeographicalCode().get(EntsoeGeographicalCode.FR).equals(Sets.newHashSet("CIM1")));
-        assertTrue(config.getForbiddenFormatsByGeographicalCode().get(EntsoeGeographicalCode.BE).equals(Sets.newHashSet("CIM1")));
+        assertTrue(config.getForbiddenFormatsByGeographicalCode().get(EntsoeGeographicalCode.FR).equals(Collections.singleton("CIM1")));
+        assertTrue(config.getForbiddenFormatsByGeographicalCode().get(EntsoeGeographicalCode.BE).equals(Collections.singleton("CIM1")));
         assertTrue(config.getForbiddenFormatsByGeographicalCode().get(EntsoeGeographicalCode.D2).isEmpty());
     }
 
     @Test
     public void testUnsupportedFormatIssue() throws Exception {
-        moduleConfig.setStringListProperty("forbiddenFormats_FR", Arrays.asList("UCT"));
+        moduleConfig.setStringListProperty("forbiddenFormats_FR", Collections.singletonList("UCT"));
         try {
-            config = EntsoeCaseRepositoryConfig.load(platformConfig, Arrays.asList("UCTE"));
+            config = EntsoeCaseRepositoryConfig.load(platformConfig, Collections.singletonList("UCTE"));
             fail();
         } catch (Exception e) {
         }

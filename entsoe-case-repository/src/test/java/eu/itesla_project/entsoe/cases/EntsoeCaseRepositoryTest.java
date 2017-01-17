@@ -8,15 +8,14 @@ package eu.itesla_project.entsoe.cases;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Sets;
+import com.google.common.jimfs.Configuration;
+import com.google.common.jimfs.Jimfs;
 import eu.itesla_project.cases.CaseType;
 import eu.itesla_project.iidm.datasource.DataSource;
 import eu.itesla_project.iidm.import_.Importer;
 import eu.itesla_project.iidm.network.Country;
 import eu.itesla_project.iidm.network.Network;
 import eu.itesla_project.entsoe.util.EntsoeGeographicalCode;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.nio.file.ShrinkWrapFileSystems;
-import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.junit.After;
@@ -45,7 +44,6 @@ import static org.junit.Assert.assertTrue;
 public class EntsoeCaseRepositoryTest {
 
     private FileSystem fileSystem;
-    private Path rootDir;
     private EntsoeCaseRepository caseRepository;
     private Network cimNetwork;
     private Network uctNetwork;
@@ -107,9 +105,8 @@ public class EntsoeCaseRepositoryTest {
 
     @Before
     public void setUp() throws Exception {
-        JavaArchive archive = ShrinkWrap.create(JavaArchive.class);
-        fileSystem = ShrinkWrapFileSystems.newFileSystem(archive);
-        rootDir = fileSystem.getPath("/");
+        fileSystem = Jimfs.newFileSystem(Configuration.unix());
+        Path rootDir = fileSystem.getPath("/");
 
         Importer cimImporter = Mockito.mock(Importer.class);
         Mockito.when(cimImporter.exists(Matchers.isA(DataSource.class)))
@@ -137,10 +134,12 @@ public class EntsoeCaseRepositoryTest {
         Mockito.when(uctImporter.import_(Matchers.isA(DataSource.class), Matchers.any()))
                 .thenReturn(uctNetwork);
 
-        caseRepository = new EntsoeCaseRepository(new EntsoeCaseRepositoryConfig(rootDir, HashMultimap.create()),
-                Arrays.asList(new EntsoeCaseRepository.EntsoeFormat(cimImporter, "CIM"),
-                        new EntsoeCaseRepository.EntsoeFormat(uctImporter, "UCT")),
-                (directory, baseName) -> new DataSourceMock(directory, baseName));
+        caseRepository = new EntsoeCaseRepository(
+                new EntsoeCaseRepositoryConfig(rootDir, HashMultimap.create()),
+                        Arrays.asList(
+                                new EntsoeCaseRepository.EntsoeFormat(cimImporter, "CIM"),
+                                new EntsoeCaseRepository.EntsoeFormat(uctImporter, "UCT")),
+                        DataSourceMock::new);
         Path dir1 = fileSystem.getPath("/CIM/SN/2013/01/13");
         Files.createDirectories(dir1);
         createFile(dir1, "20130113_0015_SN7_FR0.zip");

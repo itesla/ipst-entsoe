@@ -1,3 +1,0 @@
-#HVDC lines (hvdctest/InitialState)
-#"num" "id"
-1 "L"

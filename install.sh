@@ -15,25 +15,12 @@ ipst_package_version=` mvn -f "$sourceDir/pom.xml" org.apache.maven.plugins:mave
 ipst_package_name=ipst-$ipst_package_version
 ipst_package_type=zip
 
-dymola_build=false
-dymola_home=
-eurostag_build=false
-eurostag_home=
-matlab_build=false
-matlab_home=
-
-thirdparty_build=true
-thirdparty_prefix=$HOME/itesla_thirdparty
-thirdparty_download=true
-thirdparty_packs=$HOME/itesla_packs
-
 # Targets
 ipst_clean=false
 ipst_compile=false
 ipst_docs=false
 ipst_package=false
 ipst_install=false
-thirdparty_clean=false
 
 
 ## read settings from configuration file
@@ -52,32 +39,16 @@ usage() {
     echo ""
     echo "Available targets:"
     echo "  clean                    Clean iPST modules"
-    echo "  clean-thirdparty         Clean the thirdparty libraries"
     echo "  compile                  Compile iPST modules"
     echo "  package                  Compile iPST modules and create a distributable package"
     echo "  install                  Compile iPST modules and install it (default target)"
     echo "  help                     Display this help"
-    echo "  docs                     Generate the documentation (Doxygen/Javadoc)"
+    echo "  docs                     Generate the documentation (Javadoc)"
     echo ""
     echo "iPST options:"
     echo "  --help                   Display this help"
     echo "  --prefix                 Set the installation directory (default is $HOME/itesla)"
     echo "  --package-type           Set the package format. The supported formats are zip, tar, tar.gz and tar.bz2 (default is zip)"
-    echo ""
-    echo "iPST C++ options:"
-    echo "  --with-dymola            Enable the compilation of Dymola dependant modules (DYMOLA_HOME)"
-    echo "  --without-dymola         Disable the compilation of Dymola dependant modules (default)"
-    echo "  --with-eurostag          Enable the compilation of Eurostag dependant modules (EUROSTAG_SDK_HOME)"
-    echo "  --without-eurostag       Disable the compilation of Eurostag dependant modules (default)"
-    echo "  --with-matlab            Enable the compilation of Matlab dependant modules (MATLAB_HOME)"
-    echo "  --without-matlab         Disable the compilation of Matlab dependant modules (default)"
-    echo ""
-    echo "Thirdparty options:"
-    echo "  --with-thirdparty        Enable the compilation of thirdparty libraries (default)"
-    echo "  --without-thirdparty     Disable the compilation of thirdparty libraries"
-    echo "  --thirdparty-prefix      Set the thirdparty installation directory (default is $HOME/itesla_thirdparty)"
-    echo "  --thirdparty-download    Sets false to compile thirdparty libraries from a local repository (default is true)"
-    echo "  --thirdparty-packs       Sets the thirdparty libraries local repository (default is $HOME/itesla_packs)"
     echo ""
 }
 
@@ -136,64 +107,6 @@ writeSettings() {
     return 0
 }
 
-
-## Build required C++ thirdparty libraries
-###############################################################################
-buildthirdparty()
-{
-    if [[ $thirdparty_clean = true || $ipst_compile = true ]]; then
-        echo "** C++ thirdparty libraries"
-
-        if [ $thirdparty_clean = true ]; then
-            echo "**** Removing thirdparty install directory (if already exists)."
-            rm -rf "$thirdparty_prefix"
-        fi
-
-        if [ $ipst_compile = true ]; then
-            if [ $thirdparty_build = true ]; then
-                 echo "**** Building the C++ thirdparty libraries"
-                 thirdparty_builddir="${thirdparty_prefix}/build/ipst"
-                 cmake -Dprefix="$thirdparty_prefix" -Ddownload="$thirdparty_download" -Dpacks="$thirdparty_packs" -G "Unix Makefiles" -H"$sourceDir/thirdparty" -B"$thirdparty_builddir" || exit $?
-                 make -C "$thirdparty_builddir" || exit $?
-
-                 thirdparty_build=false
-            else
-                echo "**** Skipping the build of the required thirdparty libraries, assuming a previous build in $thirdparty_prefix"
-            fi
-        fi
-    fi
-}
-
-## Build C++ modules
-###############################################################################
-ipst_cpp()
-{
-    if [[ $ipst_clean = true || $ipst_compile = true || $ipst_docs = true ]]; then
-        echo "** iPST C++ modules"
-
-        ipst_builddir=$sourceDir/build
-
-        if [ $ipst_clean = true ]; then
-            echo "**** Removing build directory (if already exists)."
-            rm -rf "$ipst_builddir"
-        fi
-
-        if [[ $ipst_compile = true || $ipst_docs = true ]]; then
-            # TODO: rename variable
-            cmake -DCMAKE_INSTALL_PREFIX="$ipst_prefix" -Dthirdparty_prefix="$thirdparty_prefix" -DBUILD_EUROSTAG=$eurostag_build -DEUROSTAG_SDK_HOME="${eurostag_home}" -DBUILD_MATLAB=$matlab_build -DMATLAB_HOME="${matlab_home}" -DBUILD_DYMOLA=$dymola_build -DDYMOLA_HOME="${dymola_home}" -G "Unix Makefiles" -H"$sourceDir" -B"$ipst_builddir" || exit $?
-
-            if [ $ipst_compile = true ]; then
-                echo "**** Compiling C++ modules"
-                make -C "$ipst_builddir" || exit $?
-            fi
-
-            if [ $ipst_docs = true ]; then
-                echo "**** Generating Doxygen documentation"
-                make -C "$ipst_builddir" doc || exit $?
-            fi
-        fi
-    fi
-}
 
 ## Build Java Modules
 ###############################################################################
@@ -266,60 +179,20 @@ ipst_install()
         echo "**** Copying files"
         mkdir -p "$ipst_prefix" || exit $?
         cp -Rp "$sourceDir/distribution/target/distribution-${ipst_package_version}-full/itesla"/* "$ipst_prefix" || exit $?
-
-        if [ ! -f "$ipst_prefix/etc/itesla.conf" ]; then
-            echo "**** Copying configuration files"
-            mkdir -p "$ipst_prefix/etc" || exit $?
-
-            echo "#itesla_cache_dir=" >> "$ipst_prefix/etc/itesla.conf"
-            echo "#itesla_config_dir=" >> "$ipst_prefix/etc/itesla.conf"
-            echo "itesla_config_name=config" >> "$ipst_prefix/etc/itesla.conf"
-            echo "mpi_tasks=3" >> "$ipst_prefix/etc/itesla.conf"
-            echo "mpi_hosts=localhost" >> "$ipst_prefix/etc/itesla.conf"
-        fi
     fi
 }
 
 ## Parse command line
 ###############################################################################
 ipst_options="prefix:,package-type:"
-ipst_cpp_options="with-eurostag::,without-eurostag,with-dymola::,without-dymola,with-matlab::,without-matlab"
-thirdparty_options="with-thirdparty,without-thirdparty,thirdparty-prefix:,thirdparty-download,thirdparty-packs:"
 
-opts=`getopt -o '' --long "help,$ipst_options,$ipst_cpp_options,$thirdparty_options" -n 'install.sh' -- "$@"`
+opts=`getopt -o '' --long "help,$ipst_options" -n 'install.sh' -- "$@"`
 eval set -- "$opts"
 while true; do
     case "$1" in
         # iPST options
         --prefix) ipst_prefix=$2 ; shift 2 ;;
         --package-type) ipst_package_type=$2 ; shift 2 ;;
-
-        # iPST C++ options
-        --with-dymola)
-            case "$2" in
-                "") dymola_build=true ; dymola_home=${DYMOLA_HOME} ; shift 2 ;;
-                *) dymola_build=true ; dymola_home=$2 ; shift 2 ;;
-            esac ;;
-        --without-dymola) dymola_build=false ; shift ;;
-        --with-eurostag)
-            case "$2" in
-                "") eurostag_build=true ; eurostag_home=${EUROSTAG_SDK_HOME} ; shift 2 ;;
-                *) eurostag_build=true ; eurostag_home=$2 ; shift 2 ;;
-            esac ;;
-        --without-eurostag) eurostag_build=false ; shift ;;
-        --with-matlab)
-            case "$2" in
-                "") matlab_build=true ; matlab_home=${MATLAB_HOME} ; shift 2 ;;
-                *) matlab_build=true ; matlab_home=$2 ; shift 2 ;;
-            esac ;;
-        --without-matlab) matlab_build=false ; shift ;;
-
-        # Third-party options
-        --with-thirdparty) thirdparty_build=true ; shift ;;
-        --without-thirdparty) thirdparty_build=false ; shift ;;
-        --thirdparty-prefix) thirdparty_prefix=$2 ; shift 2 ;;
-        --thirdparty-download) thirdparty_download=true ; shift ;;
-        --thirdparty-packs) thirdparty_packs=$2 ; thirdparty_download=false ; shift 2 ;;
 
         # Help
         --help) usage ; exit 0 ;;
@@ -333,7 +206,6 @@ if [ $# -ne 0 ]; then
     for command in $*; do
         case "$command" in
             clean) ipst_clean=true ;;
-            clean-thirdparty) thirdparty_clean=true ; thirdparty_build=true ;;
             compile) ipst_compile=true ;;
             docs) ipst_docs=true ;;
             package) ipst_package=true ; ipst_compile=true ;;
@@ -350,12 +222,6 @@ fi
 ## Build iPST platform
 ###############################################################################
 
-# Build required C++ thirdparty libraries
-buildthirdparty
-
-# Build C++ modules
-ipst_cpp
-
 # Build Java modules
 ipst_java
 
@@ -367,3 +233,4 @@ ipst_install
 
 # Save settings
 writeSettings > "${settings}"
+

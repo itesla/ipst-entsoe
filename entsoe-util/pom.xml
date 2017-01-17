@@ -14,7 +14,7 @@
 
     <parent>
         <groupId>eu.itesla_project</groupId>
-        <artifactId>itesla-parent</artifactId>
+        <artifactId>ipst-entsoe</artifactId>
         <version>0.1-SNAPSHOT</version>
     </parent>
 
@@ -24,6 +24,7 @@
     <description>Utilities for working with ENTSO-E data</description>
 
     <dependencies>
+        <!-- Compilation dependencies -->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
@@ -37,18 +38,21 @@
             <artifactId>poi-ooxml</artifactId>
         </dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>
+            <groupId>eu.itesla_project</groupId>
             <artifactId>commons</artifactId>
         </dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>
+            <groupId>eu.itesla_project</groupId>
             <artifactId>iidm-network-api</artifactId>
         </dependency>
+        
+        <!-- Test dependencies -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
+        
     </dependencies>
 
 </project>

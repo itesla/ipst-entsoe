@@ -12,12 +12,12 @@
 
     <parent>
         <groupId>eu.itesla_project</groupId>
-        <artifactId>itesla-parent</artifactId>
+        <artifactId>ipst-entsoe</artifactId>
         <version>0.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>ucte-import</artifactId>
-
+    
     <name>UCTE import</name>
 
     <dependencies>
@@ -30,22 +30,17 @@
             <artifactId>slf4j-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>iidm-network-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
+            <groupId>eu.itesla_project</groupId>
             <artifactId>iidm-converter-api</artifactId>
-        </dependency>
-        
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>ucte-network</artifactId>
-            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>entsoe-util</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>ucte-network</artifactId>
             <version>${project.version}</version>
         </dependency>
 
@@ -55,6 +50,7 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
 
 </project>

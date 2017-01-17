@@ -58,7 +58,6 @@
         <junit.version>4.12</junit.version>
         <mockito.version>1.10.19</mockito.version>
         <poi.version>3.15</poi.version>
-        <shrinkwrap.version>1.2.6</shrinkwrap.version>
         <slf4j.version>1.7.21</slf4j.version>
     </properties>
 
@@ -277,31 +276,6 @@
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>${junit.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <!-- TODO: replace by jimfs -->
-            <dependency>
-                <groupId>org.jboss.shrinkwrap</groupId>
-                <artifactId>shrinkwrap-api</artifactId>
-                <version>${shrinkwrap.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.jboss.shrinkwrap</groupId>
-                <artifactId>shrinkwrap-api-nio2</artifactId>
-                <version>${shrinkwrap.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.jboss.shrinkwrap</groupId>
-                <artifactId>shrinkwrap-impl-base</artifactId>
-                <version>${shrinkwrap.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.jboss.shrinkwrap</groupId>
-                <artifactId>shrinkwrap-impl-nio2</artifactId>
-                <version>${shrinkwrap.version}</version>
                 <scope>test</scope>
             </dependency>
             <dependency>

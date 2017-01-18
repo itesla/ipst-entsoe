@@ -40,7 +40,7 @@
         <maven.coveralls.version>4.3.0</maven.coveralls.version>
         <maven.compiler.version>3.6.0</maven.compiler.version>
         <maven.findbugs.version>3.0.4</maven.findbugs.version>
-        <maven.jacoco.version>0.7.7.201606060606</maven.jacoco.version>
+        <maven.jacoco.version>0.7.8</maven.jacoco.version>
         <maven.jar.version>3.0.2</maven.jar.version>
         <maven.javadoc.version>2.10.4</maven.javadoc.version>
         <maven.surefire.version>2.19.1</maven.surefire.version>
@@ -48,17 +48,17 @@
 
         <autoservice.version>1.0-rc2</autoservice.version>
         <commonscli.version>1.3.1</commonscli.version>
-        <commonsio.version>2.4</commonsio.version>
+        <commonsio.version>2.5</commonsio.version>
         <gdata.version>1.41.1_1</gdata.version>
         <guava.version>20.0</guava.version>
         <ipstcore.version>0.1-SNAPSHOT</ipstcore.version>
         <jgrapht.version>1.0.1</jgrapht.version>
         <jimfs.version>1.1</jimfs.version>
-        <jodatime.version>2.9.6</jodatime.version>
+        <jodatime.version>2.9.7</jodatime.version>
         <junit.version>4.12</junit.version>
         <mockito.version>1.10.19</mockito.version>
         <poi.version>3.15</poi.version>
-        <slf4j.version>1.7.21</slf4j.version>
+        <slf4j.version>1.7.22</slf4j.version>
     </properties>
 
     <licenses>

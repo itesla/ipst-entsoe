@@ -8,15 +8,14 @@ package eu.itesla_project.entsoe.cases;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Sets;
+import com.google.common.jimfs.Configuration;
+import com.google.common.jimfs.Jimfs;
 import eu.itesla_project.cases.CaseType;
 import eu.itesla_project.iidm.datasource.DataSource;
 import eu.itesla_project.iidm.import_.Importer;
 import eu.itesla_project.iidm.network.Country;
 import eu.itesla_project.iidm.network.Network;
 import eu.itesla_project.entsoe.util.EntsoeGeographicalCode;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.nio.file.ShrinkWrapFileSystems;
-import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.junit.After;
@@ -45,10 +44,7 @@ import static org.junit.Assert.assertTrue;
 public class EntsoeAndXmlCaseRepositoryTest {
 
     private FileSystem fileSystem;
-    private Path rootDir;
     private EntsoeAndXmlCaseRepository caseRepository;
-    private Network cimNetwork;
-    private Network uctNetwork;
     private Network xmlNetwork;
 
     private class DataSourceMock implements DataSource {
@@ -108,9 +104,8 @@ public class EntsoeAndXmlCaseRepositoryTest {
 
     @Before
     public void setUp() throws Exception {
-        JavaArchive archive = ShrinkWrap.create(JavaArchive.class);
-        fileSystem = ShrinkWrapFileSystems.newFileSystem(archive);
-        rootDir = fileSystem.getPath("/");
+        fileSystem = Jimfs.newFileSystem(Configuration.unix());
+        Path rootDir = fileSystem.getPath("/");
 
         Importer cimImporter = Mockito.mock(Importer.class);
         Mockito.when(cimImporter.exists(Matchers.isA(DataSource.class)))
@@ -121,7 +116,7 @@ public class EntsoeAndXmlCaseRepositoryTest {
                 });
         Mockito.when(cimImporter.getFormat())
                 .thenReturn("CIM1");
-        cimNetwork = Mockito.mock(Network.class);
+        Network cimNetwork = Mockito.mock(Network.class);
         Mockito.when(cimImporter.import_(Matchers.isA(DataSource.class), Matchers.any()))
                 .thenReturn(cimNetwork);
 
@@ -134,7 +129,7 @@ public class EntsoeAndXmlCaseRepositoryTest {
                 });
         Mockito.when(uctImporter.getFormat())
                 .thenReturn("UCTE");
-        uctNetwork = Mockito.mock(Network.class);
+        Network uctNetwork = Mockito.mock(Network.class);
         Mockito.when(uctImporter.import_(Matchers.isA(DataSource.class), Matchers.any()))
                 .thenReturn(uctNetwork);
 
@@ -154,11 +149,11 @@ public class EntsoeAndXmlCaseRepositoryTest {
 
 
         caseRepository = new EntsoeAndXmlCaseRepository(new EntsoeAndXmlCaseRepositoryConfig(rootDir, HashMultimap.create()),
-                Arrays.asList(new EntsoeCaseRepository.EntsoeFormat(cimImporter, "CIM"),
+                Arrays.asList(
+                        new EntsoeCaseRepository.EntsoeFormat(cimImporter, "CIM"),
                         new EntsoeCaseRepository.EntsoeFormat(uctImporter, "UCT"),
-                        new EntsoeCaseRepository.EntsoeFormat(iidmImporter, "IIDM")
-                ),
-                (directory, baseName) -> new DataSourceMock(directory, baseName));
+                        new EntsoeCaseRepository.EntsoeFormat(iidmImporter, "IIDM")),
+                DataSourceMock::new);
 
         Path dir5 = fileSystem.getPath("/IIDM/SN/2013/01/14");
         Files.createDirectories(dir5);

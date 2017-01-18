@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/itesla/ipst-entsoe.svg?branch=master)](https://travis-ci.org/itesla/ipst-entsoe)
 [![Coverage Status](https://coveralls.io/repos/github/itesla/ipst-entsoe/badge.svg?branch=master)](https://coveralls.io/github/itesla/ipst-entsoe?branch=master)
+[![Dependency Status](https://www.versioneye.com/user/projects/587f65d5452b83003d3c8fa4/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/587f65d5452b83003d3c8fa4)
 [![MPL-2.0 License](https://img.shields.io/badge/license-MPL_2.0-blue.svg)](https://www.mozilla.org/en-US/MPL/2.0/)
 
 # iTESLA

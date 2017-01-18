@@ -21,6 +21,8 @@ public class EntsoeGeographicalCodeTest {
     public void testForCountry() throws Exception {
         assertTrue(EntsoeGeographicalCode.forCountry(Country.FR).equals(Sets.newHashSet(EntsoeGeographicalCode.FR)));
         assertTrue(EntsoeGeographicalCode.forCountry(Country.DE).equals(Sets.newHashSet(
-                EntsoeGeographicalCode.D1, EntsoeGeographicalCode.D2, EntsoeGeographicalCode.D4, EntsoeGeographicalCode.D7, EntsoeGeographicalCode.D8)));
+                EntsoeGeographicalCode.DE, EntsoeGeographicalCode.D1, EntsoeGeographicalCode.D2,
+                EntsoeGeographicalCode.D4, EntsoeGeographicalCode.D7, EntsoeGeographicalCode.D8)));
+        assertEquals(36 + 5, EntsoeGeographicalCode.values().length);
     }
 }

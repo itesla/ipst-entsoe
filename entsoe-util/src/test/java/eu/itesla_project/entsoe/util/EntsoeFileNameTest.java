@@ -21,16 +21,23 @@ public class EntsoeFileNameTest {
         String fileName = "20140213_0830_SN4_D20";
         EntsoeFileName ucteFileName = EntsoeFileName.parse(fileName);
         assertTrue(ucteFileName.getDate().isEqual(DateTime.parse("2014-02-13T08:30:00.000+01:00")));
-        assertTrue(ucteFileName.getForecastDistance() == 0);
-        assertTrue(ucteFileName.getCountry().equals("DE"));
-        assertTrue(ucteFileName.getGeographicalCode() == EntsoeGeographicalCode.D2);
+        assertEquals(0, ucteFileName.getForecastDistance());
+        assertEquals("DE", ucteFileName.getCountry());
+        assertSame(EntsoeGeographicalCode.D2, ucteFileName.getGeographicalCode());
+    }
+
+    @Test
+    public void testForecast() {
+        String fileName = "20140213_0830_FO4_DE0";
+        EntsoeFileName ucteFileName = EntsoeFileName.parse(fileName);
+        assertEquals(870, ucteFileName.getForecastDistance());
     }
 
     @Test
     public void testInvalidName() {
         String fileName = "???";
         EntsoeFileName ucteFileName = EntsoeFileName.parse(fileName);
-        assertTrue(ucteFileName.getForecastDistance() == 0);
-        assertTrue(ucteFileName.getCountry() == null);
+        assertEquals(0, ucteFileName.getForecastDistance());
+        assertNull(ucteFileName.getCountry());
     }
 }

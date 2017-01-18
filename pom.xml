@@ -16,7 +16,7 @@
     <version>0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>iTESLA platform</name>
+    <name>iPST ENTSO-E</name>
     <url>http://www.itesla-project.eu/</url>
 
     <modules>

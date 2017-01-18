@@ -8,6 +8,8 @@ package eu.itesla_project.entsoe.util;
 
 import eu.itesla_project.iidm.network.Country;
 
+import java.util.Objects;
+
 /**
  * @author Geoffroy Jamgotchian <geoffroy.jamgotchian at rte-france.com>
  */
@@ -20,9 +22,9 @@ public class BoundaryPoint {
     private final Country borderTo;
 
     public BoundaryPoint(String name, Country borderFrom, Country borderTo) {
-        this.name = name;
-        this.borderFrom = borderFrom;
-        this.borderTo = borderTo;
+        this.name = Objects.requireNonNull(name);
+        this.borderFrom = Objects.requireNonNull(borderFrom);
+        this.borderTo = Objects.requireNonNull(borderTo);
     }
 
     public String getName() {

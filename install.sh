@@ -86,24 +86,6 @@ writeSettings() {
     writeSetting "ipst_prefix" ${ipst_prefix}
     writeSetting "ipst_package_type" ${ipst_package_type}
 
-    writeEmptyLine
-
-    writeComment " -- iPST C++ modules options --"
-    writeSetting "eurostag_build" ${eurostag_build}
-    writeSetting "eurostag_home" "${eurostag_home}"
-    writeSetting "dymola_build" ${dymola_build}
-    writeSetting "dymola_home" "${dymola_home}"
-    writeSetting "matlab_build" ${matlab_build}
-    writeSetting "matlab_home" "${matlab_home}"
-
-    writeEmptyLine
-
-    writeComment " -- iPST thirdparty libraries --"
-    writeSetting "thirdparty_build" ${thirdparty_build}
-    writeSetting "thirdparty_prefix" ${thirdparty_prefix}
-    writeSetting "thirdparty_download" ${thirdparty_download}
-    writeSetting "thirdparty_packs" ${thirdparty_packs}
-
     return 0
 }
 

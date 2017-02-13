@@ -254,7 +254,7 @@
             </dependency>
             <dependency>
                 <groupId>eu.itesla_project</groupId>
-                <artifactId>iidm-network-api</artifactId>
+                <artifactId>iidm-api</artifactId>
                 <version>${ipstcore.version}</version>
             </dependency>
             <dependency>

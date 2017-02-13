@@ -118,6 +118,12 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>${maven.jacoco.version}</version>
+                <configuration>
+                    <excludes>
+                        <!-- Exclude CIMv1 generated model -->
+                        <exclude>cim1/**</exclude>
+                    </excludes>
+                </configuration>
                 <executions>
                     <execution>
                         <id>prepare-agent</id>

@@ -8,6 +8,7 @@ package eu.itesla_project.ucte.network.ext;
 
 import eu.itesla_project.ucte.network.UcteNodeCode;
 import java.util.Collection;
+import java.util.Objects;
 
 /**
  *
@@ -22,9 +23,9 @@ public class UcteVoltageLevel {
     private final Collection<UcteNodeCode> nodes;
 
     public UcteVoltageLevel(String name, UcteSubstation substation, Collection<UcteNodeCode> nodes) {
-        this.name = name;
-        this.substation = substation;
-        this.nodes = nodes;
+        this.name = Objects.requireNonNull(name);
+        this.substation = Objects.requireNonNull(substation);
+        this.nodes = Objects.requireNonNull(nodes);
     }
 
     public String getName() {

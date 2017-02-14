@@ -9,6 +9,8 @@ package eu.itesla_project.ucte.network;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Objects;
+
 /**
  *
  * @author Geoffroy Jamgotchian <geoffroy.jamgotchian at rte-france.com>
@@ -22,12 +24,12 @@ public abstract class UcteElement implements UcteRecord {
     private float resistance;
     private float reactance;
     private float susceptance;
-    private Integer currentLimit;
+    private Integer currentLimit; // FIXME: should not be null
     private String elementName;
 
     protected UcteElement(UcteElementId id, UcteElementStatus status, float resistance, float reactance, float susceptance, Integer currentLimit, String elementName) {
-        this.id = id;
-        this.status = status;
+        this.id = Objects.requireNonNull(id);
+        this.status = Objects.requireNonNull(status);
         this.resistance = resistance;
         this.reactance = reactance;
         this.susceptance = susceptance;
@@ -154,7 +156,7 @@ public abstract class UcteElement implements UcteRecord {
             case REAL_ELEMENT_OUT_OF_OPERATION:
                 if (Math.abs(reactance) < MIN_X) {
                     float oldReactance = reactance;
-                    reactance = reactance > 0 ? MIN_X : -MIN_X;
+                    reactance = reactance >= 0 ? MIN_X : -MIN_X;
                     LOGGER.warn("Small reactance {} of element '{}' fixed to {}", oldReactance, id, reactance);
                 }
                 break;

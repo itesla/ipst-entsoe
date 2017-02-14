@@ -6,11 +6,7 @@
  */
 package eu.itesla_project.ucte.network;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  *
@@ -32,7 +28,7 @@ public class UcteNetworkImpl implements UcteNetwork {
 
     @Override
     public void setVersion(UcteFormatVersion version) {
-        this.version = version;
+        this.version = Objects.requireNonNull(version);
     }
 
     @Override
@@ -47,6 +43,7 @@ public class UcteNetworkImpl implements UcteNetwork {
 
     @Override
     public void addNode(UcteNode node) {
+        Objects.requireNonNull(node);
         nodes.put(node.getCode(), node);
     }
 
@@ -57,11 +54,13 @@ public class UcteNetworkImpl implements UcteNetwork {
 
     @Override
     public UcteNode getNode(UcteNodeCode code) {
+        Objects.requireNonNull(code);
         return nodes.get(code);
     }
 
     @Override
     public void addLine(UcteLine line) {
+        Objects.requireNonNull(line);
         lines.put(line.getId(), line);
     }
 
@@ -72,11 +71,13 @@ public class UcteNetworkImpl implements UcteNetwork {
 
     @Override
     public UcteLine getLine(UcteElementId id) {
+        Objects.requireNonNull(id);
         return lines.get(id);
     }
 
     @Override
     public void addTransformer(UcteTransformer transformer) {
+        Objects.requireNonNull(transformer);
         transformers.put(transformer.getId(), transformer);
     }
 
@@ -87,11 +88,13 @@ public class UcteNetworkImpl implements UcteNetwork {
 
     @Override
     public UcteTransformer getTransformer(UcteElementId id) {
+        Objects.requireNonNull(id);
         return transformers.get(id);
     }
 
     @Override
     public void addRegulation(UcteRegulation regulation) {
+        Objects.requireNonNull(regulation);
         regulations.put(regulation.getTransfoId(), regulation);
     }
 
@@ -101,8 +104,9 @@ public class UcteNetworkImpl implements UcteNetwork {
     }
 
     @Override
-    public UcteRegulation getRegulation(UcteElementId transfoId) {
-        return regulations.get(transfoId);
+    public UcteRegulation getRegulation(UcteElementId id) {
+        Objects.requireNonNull(id);
+        return regulations.get(id);
     }
 
     @Override

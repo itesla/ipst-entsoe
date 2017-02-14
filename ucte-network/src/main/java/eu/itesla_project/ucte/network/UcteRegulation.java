@@ -9,6 +9,8 @@ package eu.itesla_project.ucte.network;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Objects;
+
 /**
  *
  * @author Geoffroy Jamgotchian <geoffroy.jamgotchian at rte-france.com>
@@ -24,7 +26,7 @@ public class UcteRegulation implements UcteRecord {
     private UcteAngleRegulation angleRegulation;
 
     public UcteRegulation(UcteElementId transfoId, UctePhaseRegulation phaseRegulation, UcteAngleRegulation angleRegulation) {
-        this.transfoId = transfoId;
+        this.transfoId = Objects.requireNonNull(transfoId);
         this.phaseRegulation = phaseRegulation;
         this.angleRegulation = angleRegulation;
     }
@@ -79,6 +81,7 @@ public class UcteRegulation implements UcteRecord {
                         transfoId, phaseRegulation.getU());
                 phaseRegulation.setU(Float.NaN);
             }
+            // FIXME: N should be stricly positive and NP in [-n, n]
             if (phaseRegulation.getN() == null || phaseRegulation.getN() == 0
                 || phaseRegulation.getNp() == null || Float.isNaN(phaseRegulation.getDu())) {
                 LOGGER.warn("Phase regulation of transformer '{}' removed because incomplete", transfoId);
@@ -86,12 +89,14 @@ public class UcteRegulation implements UcteRecord {
             }
         }
         if (angleRegulation != null) {
+            // FIXME: N should be stricly positive and NP in [-n, n]
             if (angleRegulation.getN() == null || angleRegulation.getN() == 0
                     || angleRegulation.getNp() == null || Float.isNaN(angleRegulation.getDu())
                     || Float.isNaN(angleRegulation.getTheta())) {
                 LOGGER.warn("Angle regulation of transformer '{}' removed because incomplete", transfoId);
                 angleRegulation = null;
             } else {
+                // FIXME: type should not be null
                 if (angleRegulation.getType() == null) {
                     LOGGER.warn("Type is missing for angle regulation of transformer '{}', default to {}", transfoId, UcteAngleRegulationType.ASYM);
                     angleRegulation.setType(UcteAngleRegulationType.ASYM);

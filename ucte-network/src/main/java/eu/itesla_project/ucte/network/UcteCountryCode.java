@@ -6,6 +6,8 @@
  */
 package eu.itesla_project.ucte.network;
 
+import java.util.Objects;
+
 /**
  *
  * @author Geoffroy Jamgotchian <geoffroy.jamgotchian at rte-france.com>
@@ -51,9 +53,9 @@ public enum UcteCountryCode {
     private final char ucteCode;
     private final String prettyName;
 
-    private UcteCountryCode(char ucteCode, String prettyName) {
+    UcteCountryCode(char ucteCode, String prettyName) {
         this.ucteCode = ucteCode;
-        this.prettyName = prettyName;
+        this.prettyName = Objects.requireNonNull(prettyName);
     }
 
     public char getUcteCode() {
@@ -69,7 +71,7 @@ public enum UcteCountryCode {
             case 'O': return AT;
             case 'A': return AL;
             case 'B': return BE;
-            case 'V': return BG ;
+            case 'V': return BG;
             case 'W': return BA;
             case '3': return BY;
             case 'S': return CH;

@@ -9,6 +9,8 @@ package eu.itesla_project.ucte.network;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Objects;
+
 /**
  *
  * @author Geoffroy Jamgotchian <geoffroy.jamgotchian at rte-france.com>
@@ -45,10 +47,10 @@ public class UcteNode implements UcteRecord {
                     float maximumPermissibleReactivePowerGeneration, float staticOfPrimaryControl,
                     float nominalPowerPrimaryControl, float threePhaseShortCircuitPower, float xrRatio,
                     UctePowerPlantType powerPlantType) {
-        this.code = code;
+        this.code = Objects.requireNonNull(code);
         this.geographicalName = geographicalName;
-        this.status = status;
-        this.typeCode = typeCode;
+        this.status = Objects.requireNonNull(status);
+        this.typeCode = Objects.requireNonNull(typeCode);
         this.voltageReference = voltageReference;
         this.activeLoad = activeLoad;
         this.reactiveLoad = reactiveLoad;
@@ -78,7 +80,7 @@ public class UcteNode implements UcteRecord {
      * @param code node code
      */
     public void setCode(UcteNodeCode code) {
-        this.code = code;
+        this.code = Objects.requireNonNull(code);
     }
 
     /**
@@ -110,7 +112,7 @@ public class UcteNode implements UcteRecord {
      * @param status node status
      */
     public void setStatus(UcteNodeStatus status) {
-        this.status = status;
+        this.status = Objects.requireNonNull(status);
     }
 
     /**
@@ -126,7 +128,7 @@ public class UcteNode implements UcteRecord {
      * @param typeCode node type code
      */
     public void setTypeCode(UcteNodeTypeCode typeCode) {
-        this.typeCode = typeCode;
+        this.typeCode = Objects.requireNonNull(typeCode);
     }
 
     /**
@@ -443,6 +445,7 @@ public class UcteNode implements UcteRecord {
                 minimumPermissibleActivePowerGeneration = activePowerGeneration;
             }
             // flat active limits and not synchronous compensator
+            // FIXME: Dead code?
             if (minimumPermissibleActivePowerGeneration == 0 && maximumPermissibleActivePowerGeneration == 0 && activePowerGeneration != 0) {
                 LOGGER.warn("Node {}: flat active limits ({}), set values to [{}, {}]",
                         code, minimumPermissibleActivePowerGeneration, DEFAULT_POWER_LIMIT, -DEFAULT_POWER_LIMIT);
@@ -453,7 +456,7 @@ public class UcteNode implements UcteRecord {
             // ---- VOLTAGE FIXES ----
 
             // PV and undefined voltage, switch to PQ
-            if (isRegulatingVoltage() && Float.isNaN(voltageReference) || voltageReference < 0.0001) {
+            if (isRegulatingVoltage() && (Float.isNaN(voltageReference) || voltageReference < 0.0001)) {
                 LOGGER.warn("Node {}: voltage is regulated, but voltage setpoint is null ({}), switch type code to {}",
                         code, voltageReference, UcteNodeTypeCode.PQ);
                 typeCode = UcteNodeTypeCode.PQ;

@@ -6,7 +6,7 @@
  */
 package eu.itesla_project.ucte.network;
 
-import com.google.common.base.Objects;
+import java.util.Objects;
 
 /**
  *
@@ -19,8 +19,8 @@ public class UcteElementId {
     private char orderCode;
 
     public UcteElementId(UcteNodeCode nodeCode1, UcteNodeCode nodeCode2, char orderCode) {
-        this.nodeCode1 = nodeCode1;
-        this.nodeCode2 = nodeCode2;
+        this.nodeCode1 = Objects.requireNonNull(nodeCode1);
+        this.nodeCode2 = Objects.requireNonNull(nodeCode2);
         this.orderCode = orderCode;
     }
 
@@ -58,7 +58,7 @@ public class UcteElementId {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(nodeCode1, nodeCode2, orderCode);
+        return com.google.common.base.Objects.hashCode(nodeCode1, nodeCode2, orderCode);
     }
 
     @Override

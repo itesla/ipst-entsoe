@@ -13,8 +13,8 @@ package eu.itesla_project.ucte.network;
 public class UctePhaseRegulation {
 
     private float du;
-    private Integer n;
-    private Integer np;
+    private Integer n; // FIXME: should not be null
+    private Integer np; // FIXME: should not be null
     private float u;
 
     public UctePhaseRegulation(float du, Integer n, Integer np, float u) {

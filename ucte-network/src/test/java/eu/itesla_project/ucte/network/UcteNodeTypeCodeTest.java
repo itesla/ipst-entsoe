@@ -8,12 +8,18 @@ package eu.itesla_project.ucte.network;
 
 import org.junit.Test;
 
+import static eu.itesla_project.ucte.network.UcteNodeTypeCode.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+
 /**
  * @author Mathieu Bague <mathieu.bague at rte-france.com>
  */
-public class CoverageTest {
+public class UcteNodeTypeCodeTest {
 
     @Test
-    public void testNothing() {
+    public void test() {
+        assertEquals(4, values().length);
+        assertArrayEquals(new UcteNodeTypeCode[]{ PQ, QT, PU, UT }, UcteNodeTypeCode.values());
     }
 }

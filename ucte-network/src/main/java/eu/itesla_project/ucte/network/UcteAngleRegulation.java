@@ -14,10 +14,10 @@ public class UcteAngleRegulation {
 
     private float du;
     private float theta;
-    private Integer n;
-    private Integer np;
+    private Integer n; // FIXME: should not be null (strictly positive?)
+    private Integer np; // FIXME: should not be null (should be in [-n, n])
     private float p;
-    private UcteAngleRegulationType type;
+    private UcteAngleRegulationType type; // FIXME: should not be null (see. UcteRegulation.fix())
 
     public UcteAngleRegulation(float du, float theta, Integer n, Integer np, float p, UcteAngleRegulationType type) {
         this.du = du;

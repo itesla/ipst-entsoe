@@ -63,7 +63,7 @@ public enum UcteVoltageLevelCode {
 
     private final float voltageLevel;
 
-    private UcteVoltageLevelCode(float voltageLevel) {
+    UcteVoltageLevelCode(float voltageLevel) {
         this.voltageLevel = voltageLevel;
     }
 

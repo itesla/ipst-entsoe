@@ -35,7 +35,7 @@ public class UcteNetworkExt implements UcteNetwork {
     private Map<UcteNodeCode, UcteVoltageLevel> node2voltageLevel;
 
     public UcteNetworkExt(UcteNetwork network, float lineMinZ) {
-        this.network = network;
+        this.network = Objects.requireNonNull(network);
         this.lineMinZ = lineMinZ;
     }
 

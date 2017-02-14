@@ -44,7 +44,7 @@ public enum UcteElementStatus {
 
     private final int code;
 
-    private UcteElementStatus(int code) {
+    UcteElementStatus(int code) {
         this.code = code;
     }
 

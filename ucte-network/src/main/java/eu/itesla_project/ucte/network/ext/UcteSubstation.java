@@ -6,11 +6,11 @@
  */
 package eu.itesla_project.ucte.network.ext;
 
-import com.google.common.base.Function;
-import com.google.common.collect.FluentIterable;
 import eu.itesla_project.ucte.network.UcteNodeCode;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -23,8 +23,8 @@ public class UcteSubstation {
     private final List<UcteVoltageLevel> voltageLevels;
 
     public UcteSubstation(String name, List<UcteVoltageLevel> voltageLevels) {
-        this.name = name;
-        this.voltageLevels = voltageLevels;
+        this.name = Objects.requireNonNull(name);
+        this.voltageLevels = Objects.requireNonNull(voltageLevels);
     }
 
     public String getName() {
@@ -36,12 +36,8 @@ public class UcteSubstation {
     }
 
     public Iterable<UcteNodeCode> getNodes() {
-        return FluentIterable.from(voltageLevels).transformAndConcat(new Function<UcteVoltageLevel, Iterable<UcteNodeCode>>() {
-            @Override
-            public Iterable<UcteNodeCode> apply(UcteVoltageLevel ucteVoltageLevel) {
-                return ucteVoltageLevel.getNodes();
-            }
-        });
+        return voltageLevels.stream()
+                .flatMap(vl -> vl.getNodes().stream())
+                .collect(Collectors.toList());
     }
-
 }

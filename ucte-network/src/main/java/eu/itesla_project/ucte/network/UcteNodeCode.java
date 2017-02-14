@@ -21,9 +21,9 @@ public class UcteNodeCode {
     private Character busbar;
 
     public UcteNodeCode(UcteCountryCode ucteCountryCode, String geographicalSpot, UcteVoltageLevelCode voltageLevelCode, Character busbar) {
-        this.ucteCountryCode = ucteCountryCode;
-        this.geographicalSpot = geographicalSpot;
-        this.voltageLevelCode = voltageLevelCode;
+        this.ucteCountryCode = Objects.requireNonNull(ucteCountryCode);
+        this.geographicalSpot = Objects.requireNonNull(geographicalSpot);
+        this.voltageLevelCode = Objects.requireNonNull(voltageLevelCode);
         this.busbar = busbar;
     }
 
@@ -40,7 +40,7 @@ public class UcteNodeCode {
      * @param ucteCountryCode UCTE country code
      */
     public void setUcteCountryCode(UcteCountryCode ucteCountryCode) {
-        this.ucteCountryCode = ucteCountryCode;
+        this.ucteCountryCode = Objects.requireNonNull(ucteCountryCode);
     }
 
     /**
@@ -56,7 +56,7 @@ public class UcteNodeCode {
      * @param geographicalSpot short description of the geographical spot
      */
     public void setGeographicalSpot(String geographicalSpot) {
-        this.geographicalSpot = geographicalSpot;
+        this.geographicalSpot = Objects.requireNonNull(geographicalSpot);
     }
 
     /**

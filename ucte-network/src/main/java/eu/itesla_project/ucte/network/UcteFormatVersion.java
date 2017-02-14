@@ -6,6 +6,8 @@
  */
 package eu.itesla_project.ucte.network;
 
+import java.util.Objects;
+
 /**
  *
  * @author Geoffroy Jamgotchian <geoffroy.jamgotchian at rte-france.com>
@@ -16,8 +18,8 @@ public enum UcteFormatVersion {
 
     private final String date;
 
-    private UcteFormatVersion(String date) {
-        this.date = date;
+    UcteFormatVersion(String date) {
+        this.date = Objects.requireNonNull(date);
     }
 
     public String getDate() {

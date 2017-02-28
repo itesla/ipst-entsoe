@@ -20,6 +20,7 @@
     <url>http://www.itesla-project.eu/</url>
 
     <modules>
+        <module>cim-anonymiser</module>
         <module>cim1-model</module>
         <module>cim1-import</module>
         <module>distribution</module>
@@ -36,15 +37,14 @@
         <java.version>1.8</java.version>
 
         <maven.assembly.version>3.0.0</maven.assembly.version>
-        <!--<maven.buildnumber.version>1.4</maven.buildnumber.version>-->
         <maven.coveralls.version>4.3.0</maven.coveralls.version>
         <maven.compiler.version>3.6.0</maven.compiler.version>
         <maven.findbugs.version>3.0.4</maven.findbugs.version>
         <maven.jacoco.version>0.7.8</maven.jacoco.version>
         <maven.jar.version>3.0.2</maven.jar.version>
         <maven.javadoc.version>2.10.4</maven.javadoc.version>
+        <maven.shade.version>3.0.0</maven.shade.version>
         <maven.surefire.version>2.19.1</maven.surefire.version>
-        <!--<maven.templating.version>1.0.0</maven.templating.version>-->
 
         <autoservice.version>1.0-rc2</autoservice.version>
         <commonscli.version>1.3.1</commonscli.version>
@@ -59,6 +59,8 @@
         <mockito.version>1.10.19</mockito.version>
         <poi.version>3.15</poi.version>
         <slf4j.version>1.7.22</slf4j.version>
+        <truevfs.version>0.11.1</truevfs.version>
+        <truecommons.version>2.5.0</truecommons.version>
     </properties>
 
     <licenses>
@@ -136,38 +138,6 @@
         </plugins>
         <pluginManagement>
             <plugins>
-                <!--
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>buildnumber-maven-plugin</artifactId>
-                    <version>${maven.buildnumber.version}</version>
-                    <executions>
-                        <execution>
-                            <phase>validate</phase>
-                            <goals>
-                                <goal>create</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                    <configuration>
-                        <doCheck>false</doCheck>
-                        <doUpdate>false</doUpdate>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>templating-maven-plugin</artifactId>
-                    <version>${maven.templating.version}</version>
-                    <executions>
-                        <execution>
-                            <id>filter-src</id>
-                            <goals>
-                                <goal>filter-sources</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
@@ -182,6 +152,11 @@
                     <groupId>org.eluder.coveralls</groupId>
                     <artifactId>coveralls-maven-plugin</artifactId>
                     <version>${maven.coveralls.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-shade-plugin</artifactId>
+                    <version>${maven.shade.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -229,6 +204,42 @@
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
                 <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.java.dev.stax-utils</groupId>
+                <artifactId>stax-utils</artifactId>
+                <version>20070216</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.bea.xml</groupId>
+                        <artifactId>jsr173-ri</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>net.java.truevfs</groupId>
+                <artifactId>truevfs-driver-zip</artifactId>
+                <version>${truevfs.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.java.truevfs</groupId>
+                <artifactId>truevfs-access</artifactId>
+                <version>${truevfs.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.java.truevfs</groupId>
+                <artifactId>truevfs-kernel-impl</artifactId>
+                <version>${truevfs.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.java.truecommons</groupId>
+                <artifactId>truecommons-services</artifactId>
+                <version>${truecommons.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.java.truecommons</groupId>
+                <artifactId>truecommons-key-default</artifactId>
+                <version>${truecommons.version}</version>
             </dependency>
 
             <!-- ipst-core dependencies -->

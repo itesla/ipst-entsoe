@@ -36,6 +36,15 @@ public class CimAnomymizer {
         void logSkipped(Set<String> skipped);
     }
 
+    public static class DefaultLogger implements Logger {
+
+        public void logAnonymizingFile(Path file) {
+        }
+
+        public void logSkipped(Set<String> skipped) {
+        }
+    }
+
     private static final Set<String> NAMES_TO_EXCLUDE = ImmutableSet.of("PATL",
                                                                         "TATL");
 
@@ -178,26 +187,6 @@ public class CimAnomymizer {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public void anonymizeFile(Path cimFile, Path anonymizedCimFile, Path dictionaryFile, Logger logger) {
-        Objects.requireNonNull(cimFile);
-        Objects.requireNonNull(anonymizedCimFile);
-        Objects.requireNonNull(dictionaryFile);
-        Objects.requireNonNull(logger);
-
-        logger.logAnonymizingFile(cimFile);
-
-        StringAnonymizer dictionary = loadDic(dictionaryFile);
-
-        Set<String> rdfIdValues = new HashSet<>();
-        Set<String> skipped = new HashSet<>();
-
-        anonymizeFile(cimFile, anonymizedCimFile, inputFactory, outputFactory, eventFactory, dictionary, rdfIdValues, skipped);
-
-        logger.logSkipped(skipped);
-
-        saveDic(dictionary, dictionaryFile);
     }
 
     public void anonymizeZip(Path cimZipFile, Path anonymizedCimFileDir, Path dictionaryFile, Logger logger) {

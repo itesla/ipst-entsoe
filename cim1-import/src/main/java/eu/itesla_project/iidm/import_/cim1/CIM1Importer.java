@@ -11,8 +11,10 @@ import cim1.model.CIMModel;
 import com.google.auto.service.AutoService;
 import com.google.common.base.Supplier;
 import com.google.common.base.Suppliers;
+import com.google.common.io.ByteStreams;
 import com.google.gdata.util.io.base.UnicodeReader;
 import eu.itesla_project.commons.config.PlatformConfig;
+import eu.itesla_project.iidm.datasource.DataSource;
 import eu.itesla_project.iidm.datasource.DataSourceUtil;
 import eu.itesla_project.iidm.datasource.ReadOnlyDataSource;
 import eu.itesla_project.iidm.import_.Importer;
@@ -30,13 +32,11 @@ import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.events.XMLEvent;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * @author Olivier Bretteville <olivier.bretteville at rte-france.com>
@@ -252,6 +252,35 @@ public class CIM1Importer implements Importer, CIM1Constants {
             } else {
                 throw new RuntimeException("TP boundary file not found");
             }
+        }
+    }
+
+    private void copyFile(ReadOnlyDataSource fromDataSource, DataSource toDataSource, String fromFileName, String toFileName) throws IOException {
+        if (fromDataSource.exists(fromFileName)) {
+            try (InputStream is = fromDataSource.newInputStream(fromFileName);
+                 OutputStream os = toDataSource.newOutputStream(toFileName, false)) {
+                ByteStreams.copy(is, os);
+            }
+        }
+    }
+
+    @Override
+    public void copy(ReadOnlyDataSource fromDataSource, DataSource toDataSource) {
+        Objects.requireNonNull(fromDataSource);
+        Objects.requireNonNull(toDataSource);
+        try {
+            String fromBaseName = getBaseName(fromDataSource);
+            String toBaseName = getBaseName(toDataSource);
+            for (String suffix : new String[] {"_ME", "_EQ", "_TP", "_SV"}) {
+                String fromFileName = DataSourceUtil.getFileName(fromBaseName, suffix, "xml");
+                String toFileName = DataSourceUtil.getFileName(toBaseName, suffix, "xml");
+                copyFile(fromDataSource, toDataSource, fromFileName, toFileName);
+            }
+            for (String fileName : new String[] {EQ_BOUNDARY_FILE_NAME, TP_BOUNDARY_FILE_NAME}) {
+                copyFile(fromDataSource, toDataSource, fileName, fileName);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

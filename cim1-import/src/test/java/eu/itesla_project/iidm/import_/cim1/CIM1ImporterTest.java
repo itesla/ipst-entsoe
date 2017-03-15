@@ -14,7 +14,7 @@ import eu.itesla_project.iidm.datasource.ReadOnlyDataSource;
 import eu.itesla_project.iidm.datasource.ZipFileDataSource;
 import org.apache.commons.io.IOUtils;
 import org.junit.After;
-import org.junit.Assert;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -38,6 +38,8 @@ public class CIM1ImporterTest {
     private DataSource fdsUnzippedMerged;
     private DataSource fdsSplit;
     private DataSource fdsUnzippedSplit;
+
+    private CIM1Importer importer;
 
     private void copyFile(DataSource dataSource, String filename) throws IOException {
         try (OutputStream stream = dataSource.newOutputStream(filename, false)) {
@@ -78,6 +80,8 @@ public class CIM1ImporterTest {
         copyFile(zdsSplit, "ieee14bus_SV.xml");
         copyFile(zdsSplit, "ENTSO-E_Boundary_Set_EU_EQ.xml");
         copyFile(zdsSplit, "ENTSO-E_Boundary_Set_EU_TP.xml");
+
+        importer = new CIM1Importer();
     }
 
     @After
@@ -87,13 +91,12 @@ public class CIM1ImporterTest {
 
     @Test
     public void exists() {
-        CIM1Importer importer = new CIM1Importer();
-        Assert.assertEquals(true, importer.exists(fdsMerged));
-        Assert.assertEquals(true, importer.exists(fdsUnzippedMerged));
-        Assert.assertEquals(true, importer.exists(zdsMerged));
-        Assert.assertEquals(true, importer.exists(fdsSplit));
-        Assert.assertEquals(true, importer.exists(fdsUnzippedSplit));
-        Assert.assertEquals(true, importer.exists(zdsSplit));
+        assertEquals(true, importer.exists(fdsMerged));
+        assertEquals(true, importer.exists(fdsUnzippedMerged));
+        assertEquals(true, importer.exists(zdsMerged));
+        assertEquals(true, importer.exists(fdsSplit));
+        assertEquals(true, importer.exists(fdsUnzippedSplit));
+        assertEquals(true, importer.exists(zdsSplit));
     }
 
     @Test
@@ -105,11 +108,21 @@ public class CIM1ImporterTest {
     }
 
     private void testImport(ReadOnlyDataSource dataSource) {
-        CIM1Importer importer = new CIM1Importer();
         try {
             importer.import_(dataSource, new Properties());
-            Assert.fail();
+            fail();
         } catch (RuntimeException ignored) {
         }
+    }
+
+    @Test
+    public void copy() throws Exception {
+        Path testCopyDir = Files.createDirectory(fileSystem.getPath("test_copy"));
+        importer.copy(zdsSplit, new FileDataSource(testCopyDir, "newbasename"));
+        assertTrue(Files.exists(testCopyDir.resolve("newbasename_EQ.xml")));
+        assertTrue(Files.exists(testCopyDir.resolve("newbasename_TP.xml")));
+        assertTrue(Files.exists(testCopyDir.resolve("newbasename_SV.xml")));
+        assertTrue(Files.exists(testCopyDir.resolve("ENTSO-E_Boundary_Set_EU_EQ.xml")));
+        assertTrue(Files.exists(testCopyDir.resolve("ENTSO-E_Boundary_Set_EU_TP.xml")));
     }
 }

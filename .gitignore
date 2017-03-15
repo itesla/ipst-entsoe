@@ -1,4 +1,5 @@
 # Maven projects
+/cim-anonymiser/target/
 /cim1-import/target/
 /cim1-model/target/
 /distribution/target

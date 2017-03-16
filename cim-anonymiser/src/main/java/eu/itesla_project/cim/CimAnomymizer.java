@@ -52,6 +52,8 @@ public class CimAnomymizer {
 
     private static final String RDF_URI = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
 
+    private static final String CIM_URI_PATTERN = "http://iec.ch/TC57/20\\d\\d/CIM-schema-cim\\d\\d";
+
     private static final QName RDF_ID = new QName(RDF_URI, "ID");
     private static final QName RDF_RESOURCE = new QName(RDF_URI, "resource");
     private static final QName RDF_ABOUT = new QName(RDF_URI, "about");
@@ -73,7 +75,7 @@ public class CimAnomymizer {
                         Attribute attribute = (Attribute) it.next();
                         QName name = attribute.getName();
                         if (RDF_ID.equals(name)) {
-                            rdfIdValues.add("#" + attribute.getValue());
+                            rdfIdValues.add(attribute.getValue());
                         }
                     }
                 }
@@ -128,10 +130,19 @@ public class CimAnomymizer {
                                     } else if (attribute.getName().equals(RDF_RESOURCE) ||
                                                attribute.getName().equals(RDF_ABOUT)) {
                                         // skip outside graph rdf:ID references
-                                        if (rdfIdValues.contains(attribute.getValue())) {
-                                            String valueWithoutHashtag = attribute.getValue().substring(1);
+                                        int hashTagPos = attribute.getValue().indexOf("#");
+                                        String valueNsUri;
+                                        String value;
+                                        if (hashTagPos != -1) {
+                                            valueNsUri = attribute.getValue().substring(0, hashTagPos);
+                                            value = attribute.getValue().substring(hashTagPos + 1);
+                                        } else {
+                                            valueNsUri = null;
+                                            value = attribute.getValue();
+                                        }
+                                        if ((valueNsUri == null || !valueNsUri.matches(CIM_URI_PATTERN)) && (rdfIdValues == null || rdfIdValues.contains(value))) {
                                             newAttribute = eventFactory.createAttribute(attribute.getName(),
-                                                                                        "#" + dictionary.anonymize(valueWithoutHashtag));
+                                                                                        (valueNsUri != null ? valueNsUri : "") + "#" + dictionary.anonymize(value));
                                         } else {
                                             skipped.add(attribute.getValue());
                                         }
@@ -189,7 +200,18 @@ public class CimAnomymizer {
         }
     }
 
-    public void anonymizeZip(Path cimZipFile, Path anonymizedCimFileDir, Path dictionaryFile, Logger logger) {
+    private Set<String> getRdfIdValues(TPath zipFile2) {
+        Set<String> rdfIdValues = new HashSet<>();
+        // memoize rdf:ID values, will be used to detect outside graph references
+        try (Stream<Path> stream = Files.list(zipFile2)) {
+            stream.forEach(cimFile -> readRdfIdValues(cimFile, inputFactory, rdfIdValues));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return rdfIdValues;
+    }
+
+    public void anonymizeZip(Path cimZipFile, Path anonymizedCimFileDir, Path dictionaryFile, Logger logger, boolean skipExternalRef) {
         Objects.requireNonNull(cimZipFile);
         Objects.requireNonNull(anonymizedCimFileDir);
         Objects.requireNonNull(dictionaryFile);
@@ -206,14 +228,9 @@ public class CimAnomymizer {
         // load dictionary
         StringAnonymizer dictionary = loadDic(dictionaryFile);
 
-        // memoize rdf:ID values, will be used to detect outside graph references
-        Set<String> rdfIdValues = new HashSet<>();
         TPath zipFile2 = new TPath(cimZipFile);
-        try (Stream<Path> stream = Files.list(zipFile2)) {
-            stream.forEach(cimFile -> readRdfIdValues(cimFile, inputFactory, rdfIdValues));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+
+        Set<String> rdfIdValues = skipExternalRef ? getRdfIdValues(zipFile2) : null;
 
         Set<String> skipped = new HashSet<>();
 

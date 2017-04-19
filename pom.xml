@@ -302,6 +302,12 @@
                 <version>${slf4j.version}</version>
                 <scope>test</scope>
             </dependency>
+            <dependency>
+                <groupId>eu.itesla_project</groupId>
+                <artifactId>commons</artifactId>
+                <version>${ipstcore.version}</version>
+                <type>test-jar</type>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>

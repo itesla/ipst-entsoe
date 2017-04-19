@@ -1,5 +1,6 @@
 /**
  * Copyright (c) 2016, All partners of the iTesla project (http://www.itesla-project.eu/consortium)
+ * Copyright (c) 2017, RTE (http://www.rte-france.com)
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -18,13 +19,13 @@ public class UcteNetworkImpl implements UcteNetwork {
 
     private final List<String> comments = new ArrayList<>();
 
-    private final Map<UcteNodeCode, UcteNode> nodes = new HashMap<>();
+    private final Map<UcteNodeCode, UcteNode> nodes = new LinkedHashMap<>();
 
-    private final Map<UcteElementId, UcteLine> lines = new HashMap<>();
+    private final Map<UcteElementId, UcteLine> lines = new LinkedHashMap<>();
 
-    private final Map<UcteElementId, UcteTransformer> transformers = new HashMap<>();
+    private final Map<UcteElementId, UcteTransformer> transformers = new LinkedHashMap<>();
 
-    private final Map<UcteElementId, UcteRegulation> regulations = new HashMap<>();
+    private final Map<UcteElementId, UcteRegulation> regulations = new LinkedHashMap<>();
 
     @Override
     public void setVersion(UcteFormatVersion version) {

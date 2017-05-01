@@ -1,7 +1,7 @@
 # Maven projects
 /cim1-import/target/
 /cim1-model/target/
-/distribution/target
+/distribution-entsoe/target
 /entsoe-case-repository/target
 /entsoe-util/target/
 /network-merge/target/

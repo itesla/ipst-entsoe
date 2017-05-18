@@ -9,8 +9,8 @@ package eu.itesla_project.iidm.import_.cim1;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Multimap;
-import eu.itesla_project.iidm.network.*;
 import eu.itesla_project.entsoe.util.EntsoeFileName;
+import eu.itesla_project.iidm.network.*;
 import org.jgrapht.UndirectedGraph;
 import org.jgrapht.alg.ConnectivityInspector;
 import org.jgrapht.graph.Pseudograph;
@@ -1179,6 +1179,43 @@ class CIM1Converter implements CIM1Constants {
         }
     }
 
+    public static Country getCountryFromSubregionName(String name) {
+        Objects.requireNonNull(name);
+        Country country = null;
+        switch (name) {
+            case "NO1":
+            case "NO2":
+            case "NO3":
+            case "NO4":
+            case "NO5":
+                country = Country.NO;
+                break;
+            case "SE1":
+            case "SE2":
+            case "SE3":
+            case "SE4":
+                country = Country.SE;
+                break;
+            case "FI1":
+                country = Country.FI;
+                break;
+            case "DK1":
+            case "DK2":
+                country = Country.DK;
+                break;
+            case "EE1":
+                country = Country.EE;
+                break;
+            case "LV1":
+                country = Country.LV;
+                break;
+            case "LT1":
+                country = Country.LT;
+                break;
+        }
+        return country;
+    }
+
     Network convert() {
         LOGGER.trace("Converting CIM model to iTesla model");
 
@@ -1339,6 +1376,9 @@ class CIM1Converter implements CIM1Constants {
                     } catch (IllegalArgumentException ignore) {
                     }
                 }
+            }
+            if ((country == null) && (sgr.getName() != null)) {
+                country = getCountryFromSubregionName(sgr.getName());
             }
             if (country == null) {
                 substationsNotAssociatedToValidCountry.add(s.getId());

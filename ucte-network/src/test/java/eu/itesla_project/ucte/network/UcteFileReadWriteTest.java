@@ -14,7 +14,6 @@ import org.junit.Test;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 /**
  * @author Christian Biasuzzi <christian.biasuzzi@techrain.it>
@@ -50,8 +49,6 @@ public class UcteFileReadWriteTest extends ConverterBaseTest {
 
     @Test
     public void roundTripTest() throws IOException {
-        write(create(), Paths.get("/tmp/toto.uct"));
-
         roundTripTest(create(), UcteFileReadWriteTest::write, UcteFileReadWriteTest::read, REFERENCE);
     }
 

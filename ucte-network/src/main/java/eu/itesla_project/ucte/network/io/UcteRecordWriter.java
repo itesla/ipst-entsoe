@@ -1,5 +1,6 @@
 /**
  * Copyright (c) 2016, All partners of the iTesla project (http://www.itesla-project.eu/consortium)
+ * Copyright (c) 2017, RTE (http://www.rte-france.com)
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -10,10 +11,13 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 
 /**
- *
  * @author Geoffroy Jamgotchian <geoffroy.jamgotchian at rte-france.com>
  */
 class UcteRecordWriter {
+
+    private enum Alignment {
+        RIGHT, LEFT
+    }
 
     private final BufferedWriter writer;
 
@@ -44,22 +48,31 @@ class UcteRecordWriter {
         if (value == null) {
             return;
         }
-        resizeBuffer(endIndex + 1);
+        resizeBuffer(endIndex);
         buffer.replace(beginIndex, endIndex, value);
     }
 
+    private String alignAndTruncate(String str, int strLen, Alignment alignment) {
+        String formattedStr = String.format(java.util.Locale.US, "%" + (alignment.equals(Alignment.LEFT) ? "-" : "") + strLen + "s", str);
+        return formattedStr.substring(0, strLen);
+    }
+
+    // floats are left aligned, zero padded to fill the field length
     void writeFloat(float value, int beginIndex, int endIndex) {
         if (Float.isNaN(value)) {
             return;
         }
-        writeString(Float.toString(value), beginIndex, endIndex);
+        String fieldStr = alignAndTruncate(Float.toString(value), endIndex - beginIndex, Alignment.LEFT);
+        writeString(fieldStr.replace(' ', '0'), beginIndex, endIndex);
     }
 
+    // integers are right aligned
     void writeInteger(Integer value, int beginIndex, int endIndex) {
         if (value == null) {
             return;
         }
-        writeString(Integer.toString(value), beginIndex, endIndex);
+        String fieldStr = alignAndTruncate(Integer.toString(value), endIndex - beginIndex, Alignment.RIGHT);
+        writeString(fieldStr, beginIndex, endIndex);
     }
 
     void writeInteger(Integer value, int index) {
@@ -102,7 +115,7 @@ class UcteRecordWriter {
         writeChar(value.name().charAt(0), index);
     }
 
-    void flush() throws IOException {
+    private void flush() throws IOException {
         writer.write(buffer.toString());
         buffer.setLength(0); // reset buffer
     }

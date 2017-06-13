@@ -23,7 +23,7 @@
         <module>cim-anonymiser</module>
         <module>cim1-model</module>
         <module>cim1-import</module>
-        <module>distribution</module>
+        <module>distribution-entsoe</module>
         <module>entsoe-case-repository</module>
         <module>entsoe-util</module>
         <module>network-merge</module>
@@ -312,6 +312,12 @@
                 <artifactId>slf4j-simple</artifactId>
                 <version>${slf4j.version}</version>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>eu.itesla_project</groupId>
+                <artifactId>commons</artifactId>
+                <version>${ipstcore.version}</version>
+                <type>test-jar</type>
             </dependency>
 
         </dependencies>

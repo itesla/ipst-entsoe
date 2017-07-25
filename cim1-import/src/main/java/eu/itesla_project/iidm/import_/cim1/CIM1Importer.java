@@ -232,7 +232,7 @@ public class CIM1Importer implements Importer, CIM1Constants {
             LOGGER.debug("Using custom EQ boundary file");
             return dataSource.newInputStream(EQ_BOUNDARY_FILE_NAME);
         } else {
-            Path path = PlatformConfig.CONFIG_DIR.resolve(EQ_BOUNDARY_FILE_NAME);
+            Path path = PlatformConfig.defaultConfig().getConfigDir().resolve(EQ_BOUNDARY_FILE_NAME);
             if (Files.exists(path)) {
                 return Files.newInputStream(path);
             } else {
@@ -246,7 +246,7 @@ public class CIM1Importer implements Importer, CIM1Constants {
             LOGGER.debug("Using custom TP boundary file");
             return dataSource.newInputStream(TP_BOUNDARY_FILE_NAME);
         } else {
-            Path path = PlatformConfig.CONFIG_DIR.resolve(TP_BOUNDARY_FILE_NAME);
+            Path path = PlatformConfig.defaultConfig().getConfigDir().resolve(TP_BOUNDARY_FILE_NAME);
             if (Files.exists(path)) {
                 return Files.newInputStream(path);
             } else {

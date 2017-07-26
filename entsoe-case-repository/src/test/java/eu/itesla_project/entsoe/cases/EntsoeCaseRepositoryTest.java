@@ -11,7 +11,7 @@ import com.google.common.collect.Sets;
 import com.google.common.jimfs.Configuration;
 import com.google.common.jimfs.Jimfs;
 import eu.itesla_project.cases.CaseType;
-import eu.itesla_project.iidm.datasource.DataSource;
+import eu.itesla_project.commons.datasource.DataSource;
 import eu.itesla_project.iidm.import_.Importer;
 import eu.itesla_project.iidm.network.Country;
 import eu.itesla_project.iidm.network.Network;

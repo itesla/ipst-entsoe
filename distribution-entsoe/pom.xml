@@ -27,12 +27,12 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>cim1-model</artifactId>
+            <artifactId>cim1-converter</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>cim1-import</artifactId>
+            <artifactId>cim1-model</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
@@ -52,7 +52,7 @@
         </dependency>        
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>ucte-import</artifactId>
+            <artifactId>ucte-converter</artifactId>
             <version>${project.version}</version>
         </dependency>        
         <dependency>

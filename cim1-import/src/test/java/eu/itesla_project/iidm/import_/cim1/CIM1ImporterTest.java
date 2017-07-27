@@ -8,10 +8,10 @@ package eu.itesla_project.iidm.import_.cim1;
 
 import com.google.common.jimfs.Configuration;
 import com.google.common.jimfs.Jimfs;
-import eu.itesla_project.iidm.datasource.DataSource;
-import eu.itesla_project.iidm.datasource.FileDataSource;
-import eu.itesla_project.iidm.datasource.ReadOnlyDataSource;
-import eu.itesla_project.iidm.datasource.ZipFileDataSource;
+import eu.itesla_project.commons.datasource.DataSource;
+import eu.itesla_project.commons.datasource.FileDataSource;
+import eu.itesla_project.commons.datasource.ReadOnlyDataSource;
+import eu.itesla_project.commons.datasource.ZipFileDataSource;
 import org.apache.commons.io.IOUtils;
 import org.junit.After;
 import static org.junit.Assert.*;

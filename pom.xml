@@ -37,6 +37,7 @@
 
         <maven.assembly.version>3.0.0</maven.assembly.version>
         <!--<maven.buildnumber.version>1.4</maven.buildnumber.version>-->
+        <maven.checkstyle.version>2.17</maven.checkstyle.version>
         <maven.coveralls.version>4.3.0</maven.coveralls.version>
         <maven.compiler.version>3.6.0</maven.compiler.version>
         <maven.findbugs.version>3.0.4</maven.findbugs.version>
@@ -186,6 +187,38 @@
             </plugins>
         </pluginManagement>
     </build>
+
+    <profiles>
+        <profile>
+            <id>checks</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-checkstyle-plugin</artifactId>
+                        <version>${maven.checkstyle.version}</version>
+                        <executions>
+                            <execution>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                                <configuration>
+                                    <configLocation>checkstyle.xml</configLocation>
+                                    <consoleOutput>true</consoleOutput>
+                                    <failsOnError>true</failsOnError>
+                                    <excludes>cim1/**</excludes>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
     <dependencyManagement>
         <dependencies>

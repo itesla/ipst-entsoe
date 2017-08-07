@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
 /**
  * @author Geoffroy Jamgotchian <geoffroy.jamgotchian at rte-france.com>
  */
-class CIM1PSSENamingStrategy implements CIM1NamingStrategy {
+class CIM1PsseNamingStrategy implements CIM1NamingStrategy {
 
     private static final Pattern POWER_TRANSFORMER_DESCRIPTION_PATTERN = Pattern.compile("(\\d*) (\\d*) (\\d*) '(\\d*) '");
 
@@ -28,7 +28,7 @@ class CIM1PSSENamingStrategy implements CIM1NamingStrategy {
 
     private BiMap<String, String> idMapping = null;
 
-    CIM1PSSENamingStrategy(CIMModel model) {
+    CIM1PsseNamingStrategy(CIMModel model) {
         this.model = Objects.requireNonNull(model);
     }
 

@@ -11,11 +11,11 @@ import cim1.model.CIMModel;
 /**
  * @author Geoffroy Jamgotchian <geoffroy.jamgotchian at rte-france.com>
  */
-public class CIM1PSSENamingStrategyFactory implements CIM1NamingStrategyFactory {
+public class CIM1PsseNamingStrategyFactory implements CIM1NamingStrategyFactory {
 
     @Override
     public CIM1NamingStrategy create(CIMModel model) {
-        return new CIM1PSSENamingStrategy(model);
+        return new CIM1PsseNamingStrategy(model);
     }
 
 }

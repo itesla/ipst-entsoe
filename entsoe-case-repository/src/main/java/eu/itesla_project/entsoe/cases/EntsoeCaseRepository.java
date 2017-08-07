@@ -183,13 +183,13 @@ public class EntsoeCaseRepository implements CaseRepository {
         return networks2 == null ? Collections.emptyList() : networks2;
     }
 
-	@Override
-	public boolean isDataAvailable(DateTime date, CaseType type, Country country) {
-		return isNetworkDataAvailable(date, type, country);
-	}
+    @Override
+    public boolean isDataAvailable(DateTime date, CaseType type, Country country) {
+        return isNetworkDataAvailable(date, type, country);
+    }
 
-	private boolean isNetworkDataAvailable(DateTime date, CaseType type, Country country) {
-		Objects.requireNonNull(date);
+    private boolean isNetworkDataAvailable(DateTime date, CaseType type, Country country) {
+        Objects.requireNonNull(date);
         Objects.requireNonNull(type);
         return scanRepository(toCetDate(date), type, country, importContexts -> {
             if (importContexts.size() > 0) {
@@ -202,7 +202,7 @@ public class EntsoeCaseRepository implements CaseRepository {
             }
             return null;
         }) != null;
-	}
+    }
 
     private void browse(Path dir, Consumer<Path> handler) {
         try (Stream<Path> stream = Files.list(dir)) {

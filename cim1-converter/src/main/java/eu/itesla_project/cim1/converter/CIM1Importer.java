@@ -308,7 +308,7 @@ public class CIM1Importer implements Importer, CIM1Constants {
 
                 CIM1NamingStrategyFactory namingStrategyFactory;
                 try (InputStream eqIs = newInputStream(dataSource, "_EQ", "xml")) { // just test eq file to save time
-                    namingStrategyFactory = usePsseNamingStrategy && isPtiCim14(eqIs) ? new CIM1PSSENamingStrategyFactory()
+                    namingStrategyFactory = usePsseNamingStrategy && isPtiCim14(eqIs) ? new CIM1PsseNamingStrategyFactory()
                                                                                       : new CIM1DefaultNamingStrategyFactory();
                 }
 

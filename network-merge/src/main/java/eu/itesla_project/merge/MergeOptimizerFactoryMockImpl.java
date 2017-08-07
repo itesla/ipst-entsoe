@@ -13,8 +13,7 @@ import eu.itesla_project.iidm.network.Network;
  *
  * @author Quinary <itesla@quinary.com>
  */
-public class MergeOptimizerFactoryMockImpl implements MergeOptimizerFactory
-{
+public class MergeOptimizerFactoryMockImpl implements MergeOptimizerFactory {
     public MergeOptimizer newMergeOptimizer(final Network network, final ComputationManager computationManager) {
         return new MergeOptimizerMockImpl(network, computationManager);
     }

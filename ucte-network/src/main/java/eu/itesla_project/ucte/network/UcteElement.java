@@ -15,7 +15,7 @@ import java.util.Objects;
  *
  * @author Geoffroy Jamgotchian <geoffroy.jamgotchian at rte-france.com>
  */
-public abstract class UcteElement implements UcteRecord {
+public class UcteElement implements UcteRecord {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UcteElement.class);
 

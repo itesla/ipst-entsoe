@@ -6,7 +6,7 @@
  */
 package eu.itesla_project.ucte.network;
 
-import eu.itesla_project.commons.ConverterBaseTest;
+import eu.itesla_project.commons.AbstractConverterTest;
 import eu.itesla_project.ucte.network.io.UcteReader;
 import eu.itesla_project.ucte.network.io.UcteWriter;
 import org.junit.Test;
@@ -19,7 +19,7 @@ import java.nio.file.Path;
  * @author Christian Biasuzzi <christian.biasuzzi@techrain.it>
  * @author Mathieu Bague <mathieu.bague@rte-france.com>
  */
-public class UcteFileReadWriteTest extends ConverterBaseTest {
+public class UcteFileReadWriteTest extends AbstractConverterTest {
 
     private static final String REFERENCE = "/20170322_1844_SN3_FR2.uct";
 

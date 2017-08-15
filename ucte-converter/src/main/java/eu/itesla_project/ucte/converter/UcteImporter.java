@@ -76,7 +76,7 @@ public class UcteImporter implements Importer {
 
             // skip substations with only one Xnode
             UcteNodeCode firstUcteNodeCode = Iterables.find(ucteSubstation.getNodes(),
-                    code -> code.getUcteCountryCode() != UcteCountryCode.XX, null);
+                code -> code.getUcteCountryCode() != UcteCountryCode.XX, null);
             if (firstUcteNodeCode == null) {
                 continue;
             }
@@ -326,13 +326,13 @@ public class UcteImporter implements Importer {
 
                     } else {
                          // standard coupler
-                         VoltageLevel voltageLevel = network.getVoltageLevel(ucteVoltageLevel1.getName());
-                         voltageLevel.getBusBreakerView().newSwitch()
-                                 .setId(ucteLine.getId().toString())
-                                 .setBus1(nodeCode1.toString())
-                                 .setBus2(nodeCode2.toString())
-                                 .setOpen(ucteLine.getStatus() == UcteElementStatus.BUSBAR_COUPLER_OUT_OF_OPERATION)
-                               .add();
+                        VoltageLevel voltageLevel = network.getVoltageLevel(ucteVoltageLevel1.getName());
+                        voltageLevel.getBusBreakerView().newSwitch()
+                                .setId(ucteLine.getId().toString())
+                                .setBus1(nodeCode1.toString())
+                                .setBus2(nodeCode2.toString())
+                                .setOpen(ucteLine.getStatus() == UcteElementStatus.BUSBAR_COUPLER_OUT_OF_OPERATION)
+                                .add();
                     }
 
                     break;
@@ -524,10 +524,10 @@ public class UcteImporter implements Importer {
         }
         float q0 = 0;
         if (isValueValid(ucteXnode.getReactiveLoad())) {
-           q0 += ucteXnode.getReactiveLoad();
+            q0 += ucteXnode.getReactiveLoad();
         }
         if (isValueValid(ucteXnode.getReactivePowerGeneration())) {
-           q0 += ucteXnode.getReactivePowerGeneration();
+            q0 += ucteXnode.getReactivePowerGeneration();
         }
 
         // create a small impedance dangling line connected to the YNODE

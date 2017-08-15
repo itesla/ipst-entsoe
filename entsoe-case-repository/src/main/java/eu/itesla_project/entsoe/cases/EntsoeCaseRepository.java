@@ -88,9 +88,9 @@ public class EntsoeCaseRepository implements CaseRepository {
 
     EntsoeCaseRepository(EntsoeCaseRepositoryConfig config, ComputationManager computationManager) {
         this(config,
-                Arrays.asList(new EntsoeFormat(Importers.getImporter("CIM1", computationManager), "CIM"),
-                              new EntsoeFormat(Importers.getImporter("UCTE", computationManager), "UCT")), // official ENTSOE formats)
-                (directory, baseName) -> new GenericReadOnlyDataSource(directory, baseName));
+            Arrays.asList(new EntsoeFormat(Importers.getImporter("CIM1", computationManager), "CIM"),
+                          new EntsoeFormat(Importers.getImporter("UCTE", computationManager), "UCT")), // official ENTSOE formats)
+            (directory, baseName) -> new GenericReadOnlyDataSource(directory, baseName));
     }
 
     public EntsoeCaseRepositoryConfig getConfig() {

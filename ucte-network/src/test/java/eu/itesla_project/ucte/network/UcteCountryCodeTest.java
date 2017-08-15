@@ -18,17 +18,17 @@ public class UcteCountryCodeTest {
     @Test
     public void test() {
         final char[] countryCodeNodes = {
-                'O', 'A', 'B', 'V', 'W', '3', 'S', 'C', 'D',
-                'K', 'E', 'F', '5', 'G', 'M', 'H', 'I', '1',
-                '6', '2', '7', 'Y', '9', 'N', 'P', 'Z', 'R',
-                '4', '8', 'Q', 'L', 'T', 'U', '0', 'J', 'X',
+            'O', 'A', 'B', 'V', 'W', '3', 'S', 'C', 'D',
+            'K', 'E', 'F', '5', 'G', 'M', 'H', 'I', '1',
+            '6', '2', '7', 'Y', '9', 'N', 'P', 'Z', 'R',
+            '4', '8', 'Q', 'L', 'T', 'U', '0', 'J', 'X',
         };
 
         final String[] prettyNames = {
-                "Austria", "Albania", "Belgium", "Bulgaria", "Bosnia and Herzegovina", "Belarus", "Switzerland", "Czech Republic", "Germany",
-                "Denmark", "Spain", "France", "Great Britain", "Greece", "Hungary", "Croatia", "Italy", "Luxemburg",
-                "Lithuania", "Morocco", "Moldavia", "FYROM", "Norway", "Netherlands", "Portugal", "Poland", "Romania",
-                "Russia", "Sweden", "Slovakia", "Slovenia", "Turkey", "Ukraine", "Montenegro", "Serbia", "Fictitious border node"
+            "Austria", "Albania", "Belgium", "Bulgaria", "Bosnia and Herzegovina", "Belarus", "Switzerland", "Czech Republic", "Germany",
+            "Denmark", "Spain", "France", "Great Britain", "Greece", "Hungary", "Croatia", "Italy", "Luxemburg",
+            "Lithuania", "Morocco", "Moldavia", "FYROM", "Norway", "Netherlands", "Portugal", "Poland", "Romania",
+            "Russia", "Sweden", "Slovakia", "Slovenia", "Turkey", "Ukraine", "Montenegro", "Serbia", "Fictitious border node"
         };
 
         assertEquals(36, UcteCountryCode.values().length);

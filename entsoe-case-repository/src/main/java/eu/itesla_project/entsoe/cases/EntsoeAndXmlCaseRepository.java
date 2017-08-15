@@ -36,10 +36,10 @@ public class EntsoeAndXmlCaseRepository extends EntsoeCaseRepository{
 
     public EntsoeAndXmlCaseRepository(EntsoeCaseRepositoryConfig config, ComputationManager computationManager) {
         super(config,
-                Arrays.asList(new EntsoeFormat(Importers.getImporter("CIM1", computationManager), "CIM"),
-                        new EntsoeFormat(Importers.getImporter("UCTE", computationManager), "UCT"), // official ENTSOE formats)
-                        new EntsoeFormat(Importers.getImporter("XIIDM", computationManager), "IIDM")), // XIIDM format
-                (directory, baseName) -> new GenericReadOnlyDataSource(directory, baseName));
+            Arrays.asList(new EntsoeFormat(Importers.getImporter("CIM1", computationManager), "CIM"),
+                          new EntsoeFormat(Importers.getImporter("UCTE", computationManager), "UCT"), // official ENTSOE formats)
+                          new EntsoeFormat(Importers.getImporter("XIIDM", computationManager), "IIDM")), // XIIDM format
+            (directory, baseName) -> new GenericReadOnlyDataSource(directory, baseName));
     }
 
     public EntsoeAndXmlCaseRepository(EntsoeCaseRepositoryConfig config, List<EntsoeFormat> formats, ReadOnlyDataSourceFactory dataSourceFactory) {

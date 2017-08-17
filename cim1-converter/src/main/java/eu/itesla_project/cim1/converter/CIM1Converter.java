@@ -870,15 +870,15 @@ class CIM1Converter implements CIM1Constants {
 
         cim1.model.SvPowerFlow svpf1 = t1.getSvPowerFlow();
         if (svpf1 != null) {
-           transfo.getLeg1().getTerminal().setP(svpf1.getP()).setQ(svpf1.getQ());
+            transfo.getLeg1().getTerminal().setP(svpf1.getP()).setQ(svpf1.getQ());
         }
         cim1.model.SvPowerFlow svpf2 = t2.getSvPowerFlow();
         if (svpf2 != null) {
-           transfo.getLeg2().getTerminal().setP(svpf2.getP()).setQ(svpf2.getQ());
+            transfo.getLeg2().getTerminal().setP(svpf2.getP()).setQ(svpf2.getQ());
         }
         cim1.model.SvPowerFlow svpf3 = t3.getSvPowerFlow();
         if (svpf3 != null) {
-           transfo.getLeg3().getTerminal().setP(svpf3.getP()).setQ(svpf3.getQ());
+            transfo.getLeg3().getTerminal().setP(svpf3.getP()).setQ(svpf3.getQ());
         }
     }
 

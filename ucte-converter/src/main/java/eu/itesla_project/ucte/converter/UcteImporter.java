@@ -21,10 +21,7 @@ import eu.itesla_project.entsoe.util.EntsoeFileName;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.Properties;
 
 /**
@@ -675,7 +672,7 @@ public class UcteImporter implements Importer {
             }
             return false;
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new UncheckedIOException(e);
         }
     }
 
@@ -705,7 +702,7 @@ public class UcteImporter implements Importer {
                 return network;
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new UncheckedIOException(e);
         }
     }
 

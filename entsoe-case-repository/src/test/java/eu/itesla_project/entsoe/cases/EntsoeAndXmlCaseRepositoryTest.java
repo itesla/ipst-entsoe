@@ -117,7 +117,7 @@ public class EntsoeAndXmlCaseRepositoryTest {
         Mockito.when(cimImporter.getFormat())
                 .thenReturn("CIM1");
         Network cimNetwork = Mockito.mock(Network.class);
-        Mockito.when(cimImporter.import_(Matchers.isA(DataSource.class), Matchers.any()))
+        Mockito.when(cimImporter.importData(Matchers.isA(DataSource.class), Matchers.any()))
                 .thenReturn(cimNetwork);
 
         Importer uctImporter = Mockito.mock(Importer.class);
@@ -130,21 +130,21 @@ public class EntsoeAndXmlCaseRepositoryTest {
         Mockito.when(uctImporter.getFormat())
                 .thenReturn("UCTE");
         Network uctNetwork = Mockito.mock(Network.class);
-        Mockito.when(uctImporter.import_(Matchers.isA(DataSource.class), Matchers.any()))
+        Mockito.when(uctImporter.importData(Matchers.isA(DataSource.class), Matchers.any()))
                 .thenReturn(uctNetwork);
 
         Importer iidmImporter = Mockito.mock(Importer.class);
         Mockito.when(iidmImporter.exists(Matchers.isA(DataSource.class)))
                 .thenAnswer(invocation -> {
                     DataSourceMock dataSource = invocation.getArgumentAt(0, DataSourceMock.class);
-                    Path file_xiidm = dataSource.getDirectory().resolve(dataSource.getBaseName() + ".xiidm");
-                    Path file_xml = dataSource.getDirectory().resolve(dataSource.getBaseName() + ".xml");
-                    return ((Files.isRegularFile(file_xiidm)) || Files.isRegularFile(file_xml));
+                    Path fileXiidm = dataSource.getDirectory().resolve(dataSource.getBaseName() + ".xiidm");
+                    Path fileXml = dataSource.getDirectory().resolve(dataSource.getBaseName() + ".xml");
+                    return ((Files.isRegularFile(fileXiidm)) || Files.isRegularFile(fileXml));
                 });
         Mockito.when(iidmImporter.getFormat())
                 .thenReturn("XIIDM");
         xmlNetwork = Mockito.mock(Network.class);
-        Mockito.when(iidmImporter.import_(Matchers.isA(DataSource.class), Matchers.any()))
+        Mockito.when(iidmImporter.importData(Matchers.isA(DataSource.class), Matchers.any()))
                 .thenReturn(xmlNetwork);
 
 

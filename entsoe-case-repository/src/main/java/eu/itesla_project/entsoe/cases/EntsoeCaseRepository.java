@@ -159,9 +159,9 @@ public class EntsoeCaseRepository implements CaseRepository {
     }
 
     private static DateTime toCetDate(DateTime date) {
-        DateTimeZone CET = DateTimeZone.forID("CET");
-        if (!date.getZone().equals(CET)) {
-            return date.toDateTime(CET);
+        DateTimeZone cet = DateTimeZone.forID("CET");
+        if (!date.getZone().equals(cet)) {
+            return date.toDateTime(cet);
         }
         return date;
     }
@@ -176,7 +176,7 @@ public class EntsoeCaseRepository implements CaseRepository {
                 networks = new ArrayList<>();
                 for (ImportContext importContext : importContexts) {
                     LOGGER.info("Loading {} in {} format", importContext.ds.getBaseName(), importContext.importer.getFormat());
-                    networks.add(importContext.importer.import_(importContext.ds, null));
+                    networks.add(importContext.importer.importData(importContext.ds, null));
                 }
             }
             return networks;

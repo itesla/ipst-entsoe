@@ -282,7 +282,7 @@ public class CIM1Importer implements Importer, CIM1Constants {
     }
 
     @Override
-    public Network import_(ReadOnlyDataSource dataSource, Properties parameters) {
+    public Network importData(ReadOnlyDataSource dataSource, Properties parameters) {
 
         Network network;
 

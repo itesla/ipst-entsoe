@@ -35,7 +35,7 @@ public class UcteImporter implements Importer {
 
     private static final float LINE_MIN_Z = 0.05f;
 
-    private final String[] EXTENSIONS = { "uct", "UCT" };
+    private static final String[] EXTENSIONS = { "uct", "UCT" };
 
     @Override
     public String getFormat() {
@@ -677,7 +677,7 @@ public class UcteImporter implements Importer {
     }
 
     @Override
-    public Network import_(ReadOnlyDataSource dataSource, Properties parameters) {
+    public Network importData(ReadOnlyDataSource dataSource, Properties parameters) {
         try {
             String ext = findExtension(dataSource);
             if (ext == null) {

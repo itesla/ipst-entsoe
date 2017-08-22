@@ -109,7 +109,7 @@ public class CIM1ImporterTest {
 
     private void testImport(ReadOnlyDataSource dataSource) {
         try {
-            importer.import_(dataSource, new Properties());
+            importer.importData(dataSource, new Properties());
             fail();
         } catch (RuntimeException ignored) {
         }

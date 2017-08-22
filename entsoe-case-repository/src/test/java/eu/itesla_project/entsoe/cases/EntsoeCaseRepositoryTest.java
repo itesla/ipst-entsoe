@@ -118,7 +118,7 @@ public class EntsoeCaseRepositoryTest {
         Mockito.when(cimImporter.getFormat())
                 .thenReturn("CIM1");
         cimNetwork = Mockito.mock(Network.class);
-        Mockito.when(cimImporter.import_(Matchers.isA(DataSource.class), Matchers.any()))
+        Mockito.when(cimImporter.importData(Matchers.isA(DataSource.class), Matchers.any()))
                 .thenReturn(cimNetwork);
 
         Importer uctImporter = Mockito.mock(Importer.class);
@@ -131,7 +131,7 @@ public class EntsoeCaseRepositoryTest {
         Mockito.when(uctImporter.getFormat())
                 .thenReturn("UCTE");
         uctNetwork = Mockito.mock(Network.class);
-        Mockito.when(uctImporter.import_(Matchers.isA(DataSource.class), Matchers.any()))
+        Mockito.when(uctImporter.importData(Matchers.isA(DataSource.class), Matchers.any()))
                 .thenReturn(uctNetwork);
 
         caseRepository = new EntsoeCaseRepository(

@@ -287,7 +287,7 @@ public class UcteReader {
         UcteNetwork network = new UcteNetworkImpl();
         UcteRecordParser parser = new UcteRecordParser(reader);
         parseRecords(parser, network);
-        LOGGER.debug("UCTE file read in {} ms", (System.currentTimeMillis() - start));
+        LOGGER.debug("UCTE file read in {} ms", System.currentTimeMillis() - start);
         network.fix();
         return network;
     }

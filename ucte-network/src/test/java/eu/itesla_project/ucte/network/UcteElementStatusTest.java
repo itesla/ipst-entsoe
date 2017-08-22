@@ -17,7 +17,7 @@ public class UcteElementStatusTest {
 
     @Test
     public void test() {
-        int[] status = { 0, 8, 1, 9, 2, 7 };
+        int[] status = {0, 8, 1, 9, 2, 7};
 
         assertEquals(6, UcteElementStatus.values().length);
         for (int i = 0; i < UcteElementStatus.values().length; ++i) {

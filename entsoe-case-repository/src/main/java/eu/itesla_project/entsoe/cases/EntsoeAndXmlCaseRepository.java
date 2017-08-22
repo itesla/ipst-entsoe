@@ -30,7 +30,7 @@ import java.util.List;
  *
  * @author Quinary <itesla@quinary.com>
  */
-public class EntsoeAndXmlCaseRepository extends EntsoeCaseRepository{
+public class EntsoeAndXmlCaseRepository extends EntsoeCaseRepository {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EntsoeAndXmlCaseRepository.class);
 

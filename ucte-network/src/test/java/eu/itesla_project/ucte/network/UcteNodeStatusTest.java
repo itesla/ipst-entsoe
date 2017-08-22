@@ -20,6 +20,6 @@ public class UcteNodeStatusTest {
     @Test
     public void test() {
         assertEquals(2, UcteNodeStatus.values().length);
-        assertArrayEquals(new UcteNodeStatus[]{ REAL, EQUIVALENT }, UcteNodeStatus.values());
+        assertArrayEquals(new UcteNodeStatus[] {REAL, EQUIVALENT}, UcteNodeStatus.values());
     }
 }

@@ -397,8 +397,8 @@ class CIM1Converter implements CIM1Constants {
 
     private static float getStepXforAsymmetrical(float xStepMin, float xStepMax,
                                                  float alpha, float alphaMax, float theta) {
-        double numer = Math.sin(theta) - Math.tan (alphaMax) * Math.cos(theta);
-        double denom = Math.sin(theta) - Math.tan (alpha) * Math.cos(theta);
+        double numer = Math.sin(theta) - Math.tan(alphaMax) * Math.cos(theta);
+        double denom = Math.sin(theta) - Math.tan(alpha) * Math.cos(theta);
         return xStepMin + (xStepMax - xStepMin)
                 * (float) Math.pow(Math.tan(alpha) / Math.tan(alphaMax) * numer / denom, 2);
     }
@@ -508,7 +508,7 @@ class CIM1Converter implements CIM1Constants {
 
         float alphaMax = (float) alphaList.stream().mapToDouble(Float::doubleValue).max().getAsDouble();
 
-        for (int i = 0 ; i < alphaList.size(); i++) {
+        for (int i = 0; i < alphaList.size(); i++) {
             float alpha = alphaList.get(i);
             float rho = rhoList.get(i);
             float x;
@@ -1373,7 +1373,7 @@ class CIM1Converter implements CIM1Constants {
                 } else {
                     try {
                         country = Country.valueOf(gr.getName());
-                    } catch (IllegalArgumentException ignore) {
+                    } catch (IllegalArgumentException ignored) {
                     }
                 }
             }

@@ -66,7 +66,7 @@ public class EntsoeCaseRepositoryConfigTest {
         try {
             config = EntsoeCaseRepositoryConfig.load(platformConfig, Collections.singletonList("UCTE"));
             fail();
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
     }
 }

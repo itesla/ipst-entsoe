@@ -35,7 +35,7 @@ public class UcteImporter implements Importer {
 
     private static final float LINE_MIN_Z = 0.05f;
 
-    private static final String[] EXTENSIONS = { "uct", "UCT" };
+    private static final String[] EXTENSIONS = {"uct", "UCT"};
 
     @Override
     public String getFormat() {
@@ -212,7 +212,7 @@ public class UcteImporter implements Importer {
         UcteNode ucteXnode = ucteNetwork.getNode(ucteXnodeCode);
 
         LOGGER.warn("Create small impedance dangling line '{}' (coupler connected to XNODE '{}')",
-                xNodeName + yNodeName , ucteXnode.getCode());
+                xNodeName + yNodeName, ucteXnode.getCode());
 
         float p0 = 0;
         if (isValueValid(ucteXnode.getActiveLoad())) {
@@ -471,7 +471,7 @@ public class UcteImporter implements Importer {
 
                 case SYMM:
                     rho = 1f;
-                    alpha = (float) Math.toDegrees((2 * Math.atan2(dy, 2f * (1 + dx))));
+                    alpha = (float) Math.toDegrees(2 * Math.atan2(dy, 2f * (1 + dx)));
                     break;
 
                 default:
@@ -510,7 +510,7 @@ public class UcteImporter implements Importer {
         UcteNode ucteXnode = ucteNetwork.getNode(xNodeCode);
 
         LOGGER.warn("Create small impedance dangling line '{}' (transformer connected to XNODE '{}')",
-                xNodeName + yNodeName , ucteXnode.getCode());
+                xNodeName + yNodeName, ucteXnode.getCode());
 
         float p0 = 0;
         if (isValueValid(ucteXnode.getActiveLoad())) {
@@ -698,7 +698,7 @@ public class UcteImporter implements Importer {
                 createBuses(ucteNetwork, network, ucteFileName);
                 createLines(ucteNetwork, network);
                 createTransformers(ucteNetwork, network, ucteFileName);
-                LOGGER.debug("UCTE import done in {} ms", (System.currentTimeMillis() - start));
+                LOGGER.debug("UCTE import done in {} ms", System.currentTimeMillis() - start);
                 return network;
             }
         } catch (IOException e) {

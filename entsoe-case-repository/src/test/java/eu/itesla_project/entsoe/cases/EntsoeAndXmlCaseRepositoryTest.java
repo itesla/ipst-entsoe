@@ -139,7 +139,7 @@ public class EntsoeAndXmlCaseRepositoryTest {
                     DataSourceMock dataSource = invocation.getArgumentAt(0, DataSourceMock.class);
                     Path fileXiidm = dataSource.getDirectory().resolve(dataSource.getBaseName() + ".xiidm");
                     Path fileXml = dataSource.getDirectory().resolve(dataSource.getBaseName() + ".xml");
-                    return ((Files.isRegularFile(fileXiidm)) || Files.isRegularFile(fileXml));
+                    return Files.isRegularFile(fileXiidm) || Files.isRegularFile(fileXml);
                 });
         Mockito.when(iidmImporter.getFormat())
                 .thenReturn("XIIDM");

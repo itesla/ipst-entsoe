@@ -67,6 +67,6 @@ public class CimAnomymizerTest {
             zos.write(eq.getBytes(StandardCharsets.UTF_8));
         }
 
-        new CimAnomymizer().anonymizeZip(cimZipFile, anonymizedCimFileDir, dictionaryFile, new CimAnomymizer.DefaultLogger());
+        new CimAnomymizer().anonymizeZip(cimZipFile, anonymizedCimFileDir, dictionaryFile, new CimAnomymizer.DefaultLogger(), false);
     }
 }

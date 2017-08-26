@@ -7,6 +7,8 @@
 package eu.itesla_project.cim;
 
 import org.apache.commons.cli.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -18,6 +20,8 @@ import java.util.stream.Stream;
  * @author Geoffroy Jamgotchian <geoffroy.jamgotchian at rte-france.com>
  */
 public class Main {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
 
     private static final Options OPTIONS = new Options();
 
@@ -43,6 +47,10 @@ public class Main {
                 .argName("FILE")
                 .required()
                 .build());
+        OPTIONS.addOption(Option.builder()
+                .longOpt("skip-external-ref")
+                .desc("do not anonymize external references")
+                .build());
     }
 
     private static void printHelp() {
@@ -57,6 +65,7 @@ public class Main {
             Path cimZipPath = Paths.get(line.getOptionValue("cim-zip-path"));
             Path outputDir = Paths.get(line.getOptionValue("output-dir"));
             Path dicFile = Paths.get(line.getOptionValue("dic-file"));
+            boolean skipExternalRef = line.hasOption("skip-external-ref");
 
             CimAnomymizer anomymizer = new CimAnomymizer();
             CimAnomymizer.Logger logger = new CimAnomymizer.Logger() {
@@ -67,16 +76,16 @@ public class Main {
 
                 @Override
                 public void logSkipped(Set<String> skipped) {
-                    System.err.println("Skipped " + skipped);
+                    LOGGER.debug("Skipped {}", skipped);
                 }
             };
 
             if (Files.isDirectory(cimZipPath)) {
                 try (Stream<Path> stream = Files.list(cimZipPath).filter(cimZipFile -> cimZipFile.getFileName().toString().endsWith(".zip"))) {
-                    stream.forEach(cimZipFile -> anomymizer.anonymizeZip(cimZipFile, outputDir, dicFile, logger));
+                    stream.forEach(cimZipFile -> anomymizer.anonymizeZip(cimZipFile, outputDir, dicFile, logger, skipExternalRef));
                 }
             } else {
-                anomymizer.anonymizeZip(cimZipPath, outputDir, dicFile, logger);
+                anomymizer.anonymizeZip(cimZipPath, outputDir, dicFile, logger, skipExternalRef);
             }
         } catch (ParseException e) {
             printHelp();

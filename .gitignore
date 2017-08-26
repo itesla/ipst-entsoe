@@ -1,7 +1,6 @@
 # Maven projects
-/cim1-converter/target/
 /cim-anonymiser/target/
-/cim1-import/target/
+/cim1-converter/target/
 /cim1-model/target/
 /distribution-entsoe/target
 /entsoe-case-repository/target

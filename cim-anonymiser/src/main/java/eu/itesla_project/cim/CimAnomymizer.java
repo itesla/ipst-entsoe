@@ -136,7 +136,7 @@ public class CimAnomymizer {
                                             skipped.add(attribute.getValue());
                                         }
                                     } else {
-                                        throw new AssertionError("Unknown attribute "+  attribute.getName());
+                                        throw new AssertionError("Unknown attribute " + attribute.getName());
                                     }
                                     newAttributes.add(newAttribute != null ? newAttribute : attribute);
                                 }
@@ -147,7 +147,7 @@ public class CimAnomymizer {
                         }
                     } else if (event.isCharacters()) {
                         Characters characters = event.asCharacters();
-                        if (identifiedObjectName ) {
+                        if (identifiedObjectName) {
                             identifiedObjectName = false;
                             newEvent = anonymizeCharacters(characters, NAMES_TO_EXCLUDE, skipped, eventFactory, dictionary);
                         } else if (identifiedObjectDescription) {

@@ -78,11 +78,6 @@ class UcteRecordParser {
         return str == null || str.trim().isEmpty() ? Float.NaN : Float.valueOf(str);
     }
 
-    <E extends Enum<E>> E parseEnumOrdinal(int beginIndex, int endIndex, Class<E> clazz) {
-        Integer order = parseInt(beginIndex, endIndex);
-        return order == null ? null : clazz.getEnumConstants()[order];
-    }
-
     <E extends Enum<E>> E parseEnumOrdinal(int index, Class<E> clazz) {
         Integer order = parseInt(index);
         return order == null ? null : clazz.getEnumConstants()[order];

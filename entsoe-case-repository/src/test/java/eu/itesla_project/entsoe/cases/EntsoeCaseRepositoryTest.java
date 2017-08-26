@@ -11,7 +11,7 @@ import com.google.common.collect.Sets;
 import com.google.common.jimfs.Configuration;
 import com.google.common.jimfs.Jimfs;
 import eu.itesla_project.cases.CaseType;
-import eu.itesla_project.iidm.datasource.DataSource;
+import eu.itesla_project.commons.datasource.DataSource;
 import eu.itesla_project.iidm.import_.Importer;
 import eu.itesla_project.iidm.network.Country;
 import eu.itesla_project.iidm.network.Network;
@@ -118,7 +118,7 @@ public class EntsoeCaseRepositoryTest {
         Mockito.when(cimImporter.getFormat())
                 .thenReturn("CIM1");
         cimNetwork = Mockito.mock(Network.class);
-        Mockito.when(cimImporter.import_(Matchers.isA(DataSource.class), Matchers.any()))
+        Mockito.when(cimImporter.importData(Matchers.isA(DataSource.class), Matchers.any()))
                 .thenReturn(cimNetwork);
 
         Importer uctImporter = Mockito.mock(Importer.class);
@@ -131,7 +131,7 @@ public class EntsoeCaseRepositoryTest {
         Mockito.when(uctImporter.getFormat())
                 .thenReturn("UCTE");
         uctNetwork = Mockito.mock(Network.class);
-        Mockito.when(uctImporter.import_(Matchers.isA(DataSource.class), Matchers.any()))
+        Mockito.when(uctImporter.importData(Matchers.isA(DataSource.class), Matchers.any()))
                 .thenReturn(uctNetwork);
 
         caseRepository = new EntsoeCaseRepository(

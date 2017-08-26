@@ -152,7 +152,7 @@ public class UcteWriter {
 
     private void writeAngleRegulation(UcteAngleRegulation ar, UcteRecordWriter writer) {
         writer.writeFloat(ar != null ? ar.getDu() : Float.NaN, 39, 44);
-        writer.writeFloat(ar != null ? ar.getTheta(): Float.NaN, 45, 50);
+        writer.writeFloat(ar != null ? ar.getTheta() : Float.NaN, 45, 50);
         writer.writeInteger(ar != null ? ar.getN() : null, 51, 53);
         writer.writeInteger(ar != null ? ar.getNp() : null, 54, 57);
         writer.writeFloat(ar != null ? ar.getP() : Float.NaN, 58, 63);
@@ -179,7 +179,7 @@ public class UcteWriter {
         writeLineBlock(rw);
         writeTransformerBlock(rw);
         writeRegulationBlock(rw);
-        LOGGER.debug("UCTE file written in {} ms", (System.currentTimeMillis() - start));
+        LOGGER.debug("UCTE file written in {} ms", System.currentTimeMillis() - start);
     }
 
 }

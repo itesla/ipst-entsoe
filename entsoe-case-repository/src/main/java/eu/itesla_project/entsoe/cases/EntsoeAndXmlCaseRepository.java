@@ -8,8 +8,8 @@ package eu.itesla_project.entsoe.cases;
 
 import eu.itesla_project.cases.CaseRepository;
 import eu.itesla_project.computation.ComputationManager;
-import eu.itesla_project.iidm.datasource.GenericReadOnlyDataSource;
-import eu.itesla_project.iidm.datasource.ReadOnlyDataSourceFactory;
+import eu.itesla_project.commons.datasource.GenericReadOnlyDataSource;
+import eu.itesla_project.commons.datasource.ReadOnlyDataSourceFactory;
 import eu.itesla_project.iidm.import_.Importers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,16 +30,16 @@ import java.util.List;
  *
  * @author Quinary <itesla@quinary.com>
  */
-public class EntsoeAndXmlCaseRepository extends EntsoeCaseRepository{
+public class EntsoeAndXmlCaseRepository extends EntsoeCaseRepository {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EntsoeAndXmlCaseRepository.class);
 
     public EntsoeAndXmlCaseRepository(EntsoeCaseRepositoryConfig config, ComputationManager computationManager) {
         super(config,
-                Arrays.asList(new EntsoeFormat(Importers.getImporter("CIM1", computationManager), "CIM"),
-                        new EntsoeFormat(Importers.getImporter("UCTE", computationManager), "UCT"), // official ENTSOE formats)
-                        new EntsoeFormat(Importers.getImporter("XIIDM", computationManager), "IIDM")), // XIIDM format
-                (directory, baseName) -> new GenericReadOnlyDataSource(directory, baseName));
+            Arrays.asList(new EntsoeFormat(Importers.getImporter("CIM1", computationManager), "CIM"),
+                          new EntsoeFormat(Importers.getImporter("UCTE", computationManager), "UCT"), // official ENTSOE formats)
+                          new EntsoeFormat(Importers.getImporter("XIIDM", computationManager), "IIDM")), // XIIDM format
+            (directory, baseName) -> new GenericReadOnlyDataSource(directory, baseName));
     }
 
     public EntsoeAndXmlCaseRepository(EntsoeCaseRepositoryConfig config, List<EntsoeFormat> formats, ReadOnlyDataSourceFactory dataSourceFactory) {

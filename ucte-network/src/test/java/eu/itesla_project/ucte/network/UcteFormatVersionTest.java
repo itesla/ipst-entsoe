@@ -18,7 +18,7 @@ public class UcteFormatVersionTest {
 
     @Test
     public void test() {
-        String[] dates = { "2003.09.01", "2007.05.01" };
+        String[] dates = {"2003.09.01", "2007.05.01"};
 
         assertEquals(2, UcteFormatVersion.values().length);
         for (int i = 0; i < 2; ++i) {

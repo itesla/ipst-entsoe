@@ -11,9 +11,9 @@ import com.google.common.collect.Multimap;
 import eu.itesla_project.cases.CaseRepository;
 import eu.itesla_project.cases.CaseType;
 import eu.itesla_project.computation.ComputationManager;
-import eu.itesla_project.iidm.datasource.ReadOnlyDataSource;
-import eu.itesla_project.iidm.datasource.ReadOnlyDataSourceFactory;
-import eu.itesla_project.iidm.datasource.GenericReadOnlyDataSource;
+import eu.itesla_project.commons.datasource.ReadOnlyDataSource;
+import eu.itesla_project.commons.datasource.ReadOnlyDataSourceFactory;
+import eu.itesla_project.commons.datasource.GenericReadOnlyDataSource;
 import eu.itesla_project.iidm.import_.Importer;
 import eu.itesla_project.iidm.import_.Importers;
 import eu.itesla_project.iidm.network.Country;
@@ -27,6 +27,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
@@ -88,9 +89,9 @@ public class EntsoeCaseRepository implements CaseRepository {
 
     EntsoeCaseRepository(EntsoeCaseRepositoryConfig config, ComputationManager computationManager) {
         this(config,
-                Arrays.asList(new EntsoeFormat(Importers.getImporter("CIM1", computationManager), "CIM"),
-                              new EntsoeFormat(Importers.getImporter("UCTE", computationManager), "UCT")), // official ENTSOE formats)
-                (directory, baseName) -> new GenericReadOnlyDataSource(directory, baseName));
+            Arrays.asList(new EntsoeFormat(Importers.getImporter("CIM1", computationManager), "CIM"),
+                          new EntsoeFormat(Importers.getImporter("UCTE", computationManager), "UCT")), // official ENTSOE formats)
+            (directory, baseName) -> new GenericReadOnlyDataSource(directory, baseName));
     }
 
     public EntsoeCaseRepositoryConfig getConfig() {
@@ -158,9 +159,9 @@ public class EntsoeCaseRepository implements CaseRepository {
     }
 
     private static DateTime toCetDate(DateTime date) {
-        DateTimeZone CET = DateTimeZone.forID("CET");
-        if (!date.getZone().equals(CET)) {
-            return date.toDateTime(CET);
+        DateTimeZone cet = DateTimeZone.forID("CET");
+        if (!date.getZone().equals(cet)) {
+            return date.toDateTime(cet);
         }
         return date;
     }
@@ -175,7 +176,7 @@ public class EntsoeCaseRepository implements CaseRepository {
                 networks = new ArrayList<>();
                 for (ImportContext importContext : importContexts) {
                     LOGGER.info("Loading {} in {} format", importContext.ds.getBaseName(), importContext.importer.getFormat());
-                    networks.add(importContext.importer.import_(importContext.ds, null));
+                    networks.add(importContext.importer.importData(importContext.ds, null));
                 }
             }
             return networks;
@@ -183,13 +184,13 @@ public class EntsoeCaseRepository implements CaseRepository {
         return networks2 == null ? Collections.emptyList() : networks2;
     }
 
-	@Override
-	public boolean isDataAvailable(DateTime date, CaseType type, Country country) {
-		return isNetworkDataAvailable(date, type, country);
-	}
+    @Override
+    public boolean isDataAvailable(DateTime date, CaseType type, Country country) {
+        return isNetworkDataAvailable(date, type, country);
+    }
 
-	private boolean isNetworkDataAvailable(DateTime date, CaseType type, Country country) {
-		Objects.requireNonNull(date);
+    private boolean isNetworkDataAvailable(DateTime date, CaseType type, Country country) {
+        Objects.requireNonNull(date);
         Objects.requireNonNull(type);
         return scanRepository(toCetDate(date), type, country, importContexts -> {
             if (importContexts.size() > 0) {
@@ -202,7 +203,7 @@ public class EntsoeCaseRepository implements CaseRepository {
             }
             return null;
         }) != null;
-	}
+    }
 
     private void browse(Path dir, Consumer<Path> handler) {
         try (Stream<Path> stream = Files.list(dir)) {
@@ -215,12 +216,12 @@ public class EntsoeCaseRepository implements CaseRepository {
                             handler.accept(child);
                         }
                     } catch (IOException e) {
-                        throw new RuntimeException(e);
+                        throw new UncheckedIOException(e);
                     }
                 }
             });
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new UncheckedIOException(e);
         }
     }
 

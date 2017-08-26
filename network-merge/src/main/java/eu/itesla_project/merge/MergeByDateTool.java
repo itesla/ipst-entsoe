@@ -13,8 +13,9 @@ import eu.itesla_project.cases.CaseType;
 import eu.itesla_project.commons.config.ComponentDefaultConfig;
 import eu.itesla_project.commons.tools.Command;
 import eu.itesla_project.commons.tools.Tool;
+import eu.itesla_project.commons.tools.ToolRunningContext;
 import eu.itesla_project.computation.local.LocalComputationManager;
-import eu.itesla_project.iidm.datasource.FileDataSource;
+import eu.itesla_project.commons.datasource.FileDataSource;
 import eu.itesla_project.iidm.export.Exporter;
 import eu.itesla_project.iidm.export.Exporters;
 import eu.itesla_project.iidm.network.Country;
@@ -98,7 +99,7 @@ public class MergeByDateTool implements Tool {
     }
 
     @Override
-    public void run(CommandLine line) throws Exception {
+    public void run(CommandLine line, ToolRunningContext context) throws Exception {
         ComponentDefaultConfig defaultConfig = ComponentDefaultConfig.load();
         CaseRepository caseRepository = defaultConfig.newFactoryImpl(CaseRepositoryFactory.class).create(LocalComputationManager.getDefault());
         LoadFlowFactory loadFlowFactory = defaultConfig.newFactoryImpl(LoadFlowFactory.class);
@@ -113,12 +114,12 @@ public class MergeByDateTool implements Tool {
         }
         boolean optimize = line.hasOption("optimize");
 
-        System.out.println("merging...");
+        context.getOutputStream().println("merging...");
 
         Network merge = MergeUtil.merge(caseRepository, date, CaseType.SN, countries, loadFlowFactory, 0,
                 mergeOptimizerFactory, LocalComputationManager.getDefault(), optimize);
 
-        System.out.println("exporting...");
+        context.getOutputStream().println("exporting...");
 
         String baseName = merge.getId().replace(" ", "_");
         exporter.export(merge, null, new FileDataSource(outputDir, baseName));

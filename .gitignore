@@ -1,13 +1,14 @@
 # Maven projects
+/cim1-converter/target/
 /cim-anonymiser/target/
 /cim1-import/target/
 /cim1-model/target/
-/distribution/target
+/distribution-entsoe/target
 /entsoe-case-repository/target
 /entsoe-util/target/
 /network-merge/target/
 /target
-/ucte-import/target/
+/ucte-converter/target/
 /ucte-network/target/
 
 # IntelliJ

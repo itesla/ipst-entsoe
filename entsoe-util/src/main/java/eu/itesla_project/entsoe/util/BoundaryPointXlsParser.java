@@ -97,7 +97,7 @@ public class BoundaryPointXlsParser {
     }
 
     public Map<String, BoundaryPoint> parseDefault() throws IOException {
-        Path defaultBoundaryPoint = PlatformConfig.CONFIG_DIR.resolve("BoundaryPoint.xls");
+        Path defaultBoundaryPoint = PlatformConfig.defaultConfig().getConfigDir().resolve("BoundaryPoint.xls");
         if (!Files.exists(defaultBoundaryPoint)) {
             throw new RuntimeException("Boundary point sheet " + defaultBoundaryPoint + " not found");
         }

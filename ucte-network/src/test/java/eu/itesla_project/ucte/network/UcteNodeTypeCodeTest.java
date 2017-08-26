@@ -20,6 +20,6 @@ public class UcteNodeTypeCodeTest {
     @Test
     public void test() {
         assertEquals(4, values().length);
-        assertArrayEquals(new UcteNodeTypeCode[]{ PQ, QT, PU, UT }, UcteNodeTypeCode.values());
+        assertArrayEquals(new UcteNodeTypeCode[] {PQ, QT, PU, UT}, UcteNodeTypeCode.values());
     }
 }

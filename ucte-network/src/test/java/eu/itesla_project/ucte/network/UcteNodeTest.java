@@ -7,7 +7,6 @@
 package eu.itesla_project.ucte.network;
 
 import org.junit.Test;
-import org.slf4j.LoggerFactory;
 
 import static org.junit.Assert.*;
 

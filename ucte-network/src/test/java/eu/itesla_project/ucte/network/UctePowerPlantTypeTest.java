@@ -20,6 +20,6 @@ public class UctePowerPlantTypeTest {
     @Test
     public void test() {
         assertEquals(8, UctePowerPlantType.values().length);
-        assertArrayEquals(new UctePowerPlantType[]{ H, N, L, C, G, O, W, F }, UctePowerPlantType.values());
+        assertArrayEquals(new UctePowerPlantType[] {H, N, L, C, G, O, W, F}, UctePowerPlantType.values());
     }
 }

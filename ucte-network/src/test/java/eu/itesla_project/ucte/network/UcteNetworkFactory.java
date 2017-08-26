@@ -11,7 +11,10 @@ import java.util.function.Supplier;
 /**
  * @author Mathieu Bague <mathieu.bague at rte-france.com>
  */
-public class UcteNetworkFactory {
+public final class UcteNetworkFactory {
+
+    private UcteNetworkFactory() {
+    }
 
     public static UcteNetwork createNetwork(Supplier<UcteNetwork> factory) {
         UcteNetwork network = factory.get();

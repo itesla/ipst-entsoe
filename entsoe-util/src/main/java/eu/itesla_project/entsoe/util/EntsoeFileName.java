@@ -54,7 +54,7 @@ public class EntsoeFileName {
         return new EntsoeFileName(date, forecastDistance, geographicalCode);
     }
 
-    private EntsoeFileName(DateTime date, int forecastDistance, EntsoeGeographicalCode geographicalCode) {
+    protected EntsoeFileName(DateTime date, int forecastDistance, EntsoeGeographicalCode geographicalCode) {
         this.date = date;
         this.forecastDistance = forecastDistance;
         this.geographicalCode = geographicalCode;

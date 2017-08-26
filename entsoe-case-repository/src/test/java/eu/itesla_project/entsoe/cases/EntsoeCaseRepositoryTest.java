@@ -48,7 +48,7 @@ public class EntsoeCaseRepositoryTest {
     private Network cimNetwork;
     private Network uctNetwork;
 
-    private class DataSourceMock implements DataSource {
+    private final class DataSourceMock implements DataSource {
         private final Path directory;
         private final String baseName;
 

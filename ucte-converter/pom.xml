@@ -50,6 +50,11 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>eu.itesla_project</groupId>
+            <artifactId>iidm-impl</artifactId>
+            <scope>test</scope>
+        </dependency>
 
     </dependencies>
 

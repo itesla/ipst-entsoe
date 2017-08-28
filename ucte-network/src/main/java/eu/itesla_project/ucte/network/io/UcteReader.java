@@ -66,7 +66,7 @@ public class UcteReader {
 
     private static UcteNodeCode parseNodeCode(UcteRecordParser parser, int beginIndex) {
         UcteCountryCode ucteCountryCode = UcteCountryCode.fromUcteCode(parser.parseChar(beginIndex));
-        String geographicalSpot = parser.parseString(beginIndex + 1, beginIndex + 6);
+        String geographicalSpot = parser.parseString(beginIndex + 1, beginIndex + 6, false);
         UcteVoltageLevelCode voltageLevelCode = parser.parseEnumOrdinal(beginIndex + 6, UcteVoltageLevelCode.class);
         Character busbar = parser.parseChar(beginIndex + 7);
         return new UcteNodeCode(ucteCountryCode, geographicalSpot, voltageLevelCode, busbar);

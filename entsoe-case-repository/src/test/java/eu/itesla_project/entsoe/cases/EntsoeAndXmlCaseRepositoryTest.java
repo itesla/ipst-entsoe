@@ -47,7 +47,7 @@ public class EntsoeAndXmlCaseRepositoryTest {
     private EntsoeAndXmlCaseRepository caseRepository;
     private Network xmlNetwork;
 
-    private class DataSourceMock implements DataSource {
+    private final class DataSourceMock implements DataSource {
         private final Path directory;
         private final String baseName;
 

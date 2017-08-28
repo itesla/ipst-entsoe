@@ -19,7 +19,7 @@ import java.util.stream.Stream;
 /**
  * @author Geoffroy Jamgotchian <geoffroy.jamgotchian at rte-france.com>
  */
-public class Main {
+public final class Main {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
 
@@ -51,6 +51,9 @@ public class Main {
                 .longOpt("skip-external-ref")
                 .desc("do not anonymize external references")
                 .build());
+    }
+
+    private Main() {
     }
 
     private static void printHelp() {

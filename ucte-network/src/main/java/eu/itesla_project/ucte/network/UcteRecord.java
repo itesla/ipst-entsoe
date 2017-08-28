@@ -13,5 +13,5 @@ package eu.itesla_project.ucte.network;
 public interface UcteRecord {
 
     void fix();
-    
+
 }

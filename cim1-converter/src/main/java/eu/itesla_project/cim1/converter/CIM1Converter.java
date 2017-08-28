@@ -1124,7 +1124,7 @@ class CIM1Converter implements CIM1Constants {
 
         createReactiveCapabilityCurve(generator, sm, synchronousMachinesWithReactiveRangeForMinus9999MW);
     }
-    
+
     private void createSwitch(VoltageLevel vl, cim1.model.Switch sw) {
         cim1.model.Terminal t1 = sw.getTerminals().get(0);
         cim1.model.Terminal t2 = sw.getTerminals().get(1);

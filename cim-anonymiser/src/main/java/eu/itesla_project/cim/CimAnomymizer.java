@@ -7,6 +7,7 @@
 package eu.itesla_project.cim;
 
 import com.google.common.collect.ImmutableSet;
+import eu.itesla_project.commons.exceptions.UncheckedXmlStreamException;
 import eu.itesla_project.commons.util.StringAnonymizer;
 import javanet.staxutils.helpers.EventWriterDelegate;
 import net.java.truevfs.access.TPath;
@@ -80,8 +81,10 @@ public class CimAnomymizer {
                     }
                 }
             }
-        } catch (IOException | XMLStreamException e) {
-            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        } catch (XMLStreamException e) {
+            throw new UncheckedXmlStreamException(e);
         }
     }
 
@@ -171,8 +174,10 @@ public class CimAnomymizer {
                 }
             };
             eventWriter.add(eventReader);
-        } catch (IOException | XMLStreamException e) {
-            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        } catch (XMLStreamException e) {
+            throw new UncheckedXmlStreamException(e);
         }
     }
 
@@ -184,7 +189,7 @@ public class CimAnomymizer {
                 try (BufferedReader reader = Files.newBufferedReader(dictionaryFile, StandardCharsets.UTF_8)) {
                     dictionary.readCsv(reader);
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    throw new UncheckedIOException(e);
                 }
             }
         }
@@ -196,7 +201,7 @@ public class CimAnomymizer {
         try (BufferedWriter writer = Files.newBufferedWriter(dictionaryFile, StandardCharsets.UTF_8)) {
             dictionary.writeCsv(writer);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new UncheckedIOException(e);
         }
     }
 
@@ -206,7 +211,7 @@ public class CimAnomymizer {
         try (Stream<Path> stream = Files.list(zipFile2)) {
             stream.forEach(cimFile -> readRdfIdValues(cimFile, inputFactory, rdfIdValues));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new UncheckedIOException(e);
         }
         return rdfIdValues;
     }
@@ -242,7 +247,7 @@ public class CimAnomymizer {
                 anonymizeFile(cimFile, anonymizedCimFile, inputFactory, outputFactory, eventFactory, dictionary, rdfIdValues, skipped);
             });
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new UncheckedIOException(e);
         }
 
         logger.logSkipped(skipped);

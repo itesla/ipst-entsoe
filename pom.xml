@@ -305,6 +305,11 @@
             </dependency>
             <dependency>
                 <groupId>eu.itesla_project</groupId>
+                <artifactId>iidm-impl</artifactId>
+                <version>${ipstcore.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>eu.itesla_project</groupId>
                 <artifactId>loadflow-api</artifactId>
                 <version>${ipstcore.version}</version>
             </dependency>

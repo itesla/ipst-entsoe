@@ -98,7 +98,7 @@ public class EntsoeCaseRepository implements CaseRepository {
         return config;
     }
 
-    private static class ImportContext {
+    private static final class ImportContext {
         private final Importer importer;
         private final ReadOnlyDataSource ds;
 

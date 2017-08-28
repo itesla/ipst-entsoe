@@ -677,11 +677,11 @@ class CIM1Converter implements CIM1Constants {
                         + pt.getId());
             }
             rtc = tw1.getRatioTapChanger();
-            rtcSide = TwoTerminalsConnectable.Side.ONE;
+            rtcSide = Branch.Side.ONE;
         } else {
             if (tw2.ratioTapChangerIsSet()) {
                 rtc = tw2.getRatioTapChanger();
-                rtcSide = TwoTerminalsConnectable.Side.TWO;
+                rtcSide = Branch.Side.TWO;
             }
         }
 
@@ -693,11 +693,11 @@ class CIM1Converter implements CIM1Constants {
                         + pt.getId());
             }
             ptc = tw1.getPhaseTapChanger();
-            ptcSide = TwoTerminalsConnectable.Side.ONE;
+            ptcSide = Branch.Side.ONE;
         } else {
             if (tw2.phaseTapChangerIsSet()) {
                 ptc = tw2.getPhaseTapChanger();
-                ptcSide = TwoTerminalsConnectable.Side.TWO;
+                ptcSide = Branch.Side.TWO;
             }
         }
 
@@ -745,7 +745,7 @@ class CIM1Converter implements CIM1Constants {
             addTerminalMapping(tn2, transfo.getTerminal2());
 
             if (rtc != null) {
-                ratioTapChangerToCreateList.add(new RatioTapChangerToCreate(rtc, transfo, rtcSide == TwoTerminalsConnectable.Side.ONE,
+                ratioTapChangerToCreateList.add(new RatioTapChangerToCreate(rtc, transfo, rtcSide == Branch.Side.ONE,
                         ImmutableMap.of(t1, transfo.getTerminal1(),
                                         t2, transfo.getTerminal2())));
             }

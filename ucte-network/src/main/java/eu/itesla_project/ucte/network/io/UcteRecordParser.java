@@ -56,7 +56,12 @@ class UcteRecordParser {
     }
 
     String parseString(int beginIndex, int endIndex) {
-        return line == null || endIndex > line.length() ? null : line.substring(beginIndex, endIndex).trim();
+        return parseString(beginIndex, endIndex, true);
+    }
+
+    String parseString(int beginIndex, int endIndex, boolean trim) {
+        String untrimmed = line == null || endIndex > line.length() ? null : line.substring(beginIndex, endIndex);
+        return untrimmed == null || !trim ? untrimmed : untrimmed.trim();
     }
 
     Character parseChar(int index) {

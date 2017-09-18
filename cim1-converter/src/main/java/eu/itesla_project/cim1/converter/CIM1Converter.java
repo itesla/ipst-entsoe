@@ -138,6 +138,7 @@ class CIM1Converter implements CIM1Constants {
     private static void createCurrentLimits(cim1.model.Terminal t, Supplier<CurrentLimitsAdder> owner, Set<String> noOperationalLimitInOperationalLimitSet) {
         if (t.getOperationalLimitSet() != null) {
             CurrentLimitsAdder cla = owner.get();
+            boolean foundCurrentLimits = false;
             for (cim1.model.OperationalLimitSet ols : t.getOperationalLimitSet()) {
                 if (ols.getOperationalLimitValue() == null) {
                     noOperationalLimitInOperationalLimitSet.add(ols.getId());
@@ -150,6 +151,7 @@ class CIM1Converter implements CIM1Constants {
                         if (value <= 0) {
                             LOGGER.warn("Invalid current limit {} for {}", value, ols.getId());
                         } else {
+                            foundCurrentLimits = true;
                             switch (olt.getName()) {
                                 case "PATL":
                                     cla.setPermanentLimit(value);
@@ -169,7 +171,9 @@ class CIM1Converter implements CIM1Constants {
                     }
                 }
             }
-            cla.add();
+            if (foundCurrentLimits) {
+                cla.add();
+            }
         }
     }
 

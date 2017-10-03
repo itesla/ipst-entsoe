@@ -23,9 +23,7 @@
         <module>cim1-converter</module>
         <module>cim1-model</module>
         <module>distribution-entsoe</module>
-        <module>entsoe-case-repository</module>
         <module>entsoe-util</module>
-        <module>network-merge</module>
         <module>ucte-converter</module>
         <module>ucte-network</module>
     </modules>
@@ -301,9 +299,9 @@
                 <artifactId>loadflow-api</artifactId>
                 <version>${ipstcore.version}</version>
             </dependency>
-           
+
             <!-- Runtime dependencies -->
-            
+
             <!-- Test dependencies -->
             <dependency>
                 <groupId>com.google.guava</groupId>
